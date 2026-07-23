@@ -1,0 +1,17 @@
+{
+  "name": "workbench",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Workbench — a home for small, sharp browser tools.",
+  "scripts": {
+    "dev": "pnpm --filter @workbench-tools/web dev",
+    "build": "pnpm --filter @workbench-tools/video-to-frames build && pnpm --filter @workbench-tools/web build",
+    "build:package": "pnpm --filter @workbench-tools/video-to-frames build",
+    "lint": "pnpm --filter @workbench-tools/web lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.12.0"
+}

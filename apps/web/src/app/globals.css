@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/**
+ * Maps Tailwind's built-in font utility keys (font-sans / font-serif /
+ * font-mono) to the typefaces loaded in app/layout.tsx, so JSX can reach
+ * for Tailwind's utilities directly and get the same fonts hand-authored
+ * CSS gets via --font-display / --font-body / --font-mono below.
+ */
+@theme {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+@import "./tokens-color.css";
+@import "./tokens-type.css";
+@import "./tokens-layout.css";
+@import "./reset.css";
+@import "./theme-components.css";
+
+/* Cross-fade the theme swap between the shell and paper scopes. */
+[data-theme] {
+  transition: background-color var(--duration-slow) var(--ease-out-expo);
+}
