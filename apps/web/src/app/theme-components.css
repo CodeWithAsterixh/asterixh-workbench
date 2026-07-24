@@ -262,7 +262,7 @@ label {
 /* ---------- fixed chrome z-index ---------- */
 
 .scroll-progress-bar {
-  z-index: var(--z-header);
+  z-index: calc(var(--z-header) + 1);
 }
 
 .site-header {

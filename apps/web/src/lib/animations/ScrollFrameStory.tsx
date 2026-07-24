@@ -58,24 +58,24 @@ export function ScrollFrameStory({ frames, chapters, alt, className }: ScrollFra
       style={{ height: `${chapterCount * 100}vh` }}
     >
       <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full">
+        <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
           <div className="relative order-2 lg:order-1 min-h-[14rem]">
             {chapters.map((chapter, i) => (
               <div
                 key={chapter.title}
                 className={cn(
-                  "transition-opacity duration-500",
+                  "transition-opacity duration-500 flex flex-col gap-5",
                   i === chapterIndex ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none",
                 )}
                 aria-hidden={i !== chapterIndex}
               >
-                <span className="eyebrow mb-4">{chapter.eyebrow}</span>
-                <h3 className="text-display-sm mt-4 mb-4">{chapter.title}</h3>
+                <span className="eyebrow mb-5">{chapter.eyebrow}</span>
+                <h3 className="text-display-sm mt-5 mb-5">{chapter.title}</h3>
                 <p className="lead">{chapter.body}</p>
               </div>
             ))}
 
-            <div className="flex gap-2 mt-10" role="presentation">
+            <div className="flex gap-2 pt-14" role="presentation">
               {chapters.map((chapter, i) => (
                 <span
                   key={chapter.title}

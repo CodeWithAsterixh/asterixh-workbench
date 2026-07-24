@@ -46,8 +46,8 @@ export default function HomePage() {
 
   return (
     <>
-      <section data-theme="shell" className="relative pt-40 pb-28 overflow-hidden">
-        <div className="container">
+      <section data-theme="shell" className="relative h-dvh pt-32 overflow-hidden">
+        <div className="container flex flex-col pb-22 gap-5">
           <Reveal>
             <span className="eyebrow">Workbench &middot; Tool 01 live</span>
           </Reveal>
@@ -55,11 +55,11 @@ export default function HomePage() {
           <SplitHeading
             as="h1"
             text="Small tools. Sharp edges."
-            className="text-display-lg mt-6 max-w-4xl"
+            className="text-display-lg mt-8 max-w-4xl"
           />
 
           <Reveal delay={0.3}>
-            <p className="lead mt-8">
+            <p className="lead mt-10">
               Workbench is a growing set of single-purpose browser tools \u2014 no accounts, no
               uploads, no server round-trip. First on the bench: turn any video into a preloaded,
               zip-ready frame sequence.
@@ -67,7 +67,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={0.45}>
-            <div className="flex flex-wrap items-center gap-4 mt-10">
+            <div className="flex flex-wrap items-center gap-5 mt-14">
               <MagneticButton to="/tools/video-to-frames" variant="primary" size="lg">
                 Open Video &rarr; Frames
                 <ArrowRight size={16} strokeWidth={1.75} />
@@ -80,7 +80,7 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        <div className="tick-rule mt-24" />
+        <div className="tick-rule mt-32" />
       </section>
 
       <ScrollFrameStory
@@ -94,18 +94,18 @@ export default function HomePage() {
         <div className="container">
           <Reveal>
             <span className="eyebrow">Under the hood</span>
-            <h2 className="text-display-md mt-4 max-w-2xl">Built for the person doing the work</h2>
+            <h2 className="text-display-md mt-6 max-w-2xl">Built for the person doing the work</h2>
           </Reveal>
 
-          <div className="mt-16">
+          <div className="mt-20">
             <StickyScroll
-              topOffset={120}
+              topOffset={200}
               content={
-                <div className="flex flex-col gap-14 pb-24">
+                <div className="flex flex-col gap-20 pb-32">
                   {capabilities.map((item, index) => (
                     <Reveal key={item.title} once amount={0.5}>
                       <span className="timecode">{"//"} 0{index + 1}</span>
-                      <h3 className="text-display-sm mt-3 mb-3" style={{ fontSize: "1.75rem" }}>
+                      <h3 className="text-display-sm mt-4 mb-4" style={{ fontSize: "1.75rem" }}>
                         {item.title}
                       </h3>
                       <p className="lead">{item.body}</p>
@@ -114,7 +114,7 @@ export default function HomePage() {
                 </div>
               }
               stickyContent={
-                <div className="panel-frame p-8 aspect-[4/5] flex flex-col justify-between">
+                <div className="panel-frame p-8 w-full h-[50vh] flex flex-col justify-between">
                   <div className="flex items-center justify-between">
                     <span className="eyebrow">Console</span>
                     <span className="badge badge--live">Live</span>
@@ -138,13 +138,13 @@ export default function HomePage() {
       </section>
 
       <section data-theme="shell" className="section" style={{ background: "var(--surface-raised)" }}>
-        <div className="container">
+        <div className="container flex flex-col gap-4">
           <Reveal>
             <span className="eyebrow">The shop floor</span>
-            <h2 className="text-display-md mt-4 max-w-2xl">One tool live. More on the bench.</h2>
+            <h2 className="text-display-md mt-6 max-w-2xl">One tool live. More on the bench.</h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
             {tools.map((tool, i) => (
               <Reveal key={tool.slug} delay={i * 0.08}>
                 <ToolCard tool={tool} />
@@ -155,7 +155,7 @@ export default function HomePage() {
       </section>
 
       <section data-theme="shell" className="section--tight">
-        <div className="container grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="container grid grid-cols-1 sm:grid-cols-3 gap-12">
           {stats.map((stat) => (
             <Reveal key={stat.label}>
               <AnimatedCounter
@@ -170,10 +170,10 @@ export default function HomePage() {
       </section>
 
       <section data-theme="shell" className="section border-t border-[var(--border)]">
-        <div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+        <div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-12">
           <div>
             <span className="eyebrow">Get to work</span>
-            <h2 className="text-display-sm mt-4 max-w-md">Ready to slice something up?</h2>
+            <h2 className="text-display-sm mt-6 max-w-md">Ready to slice something up?</h2>
           </div>
           <MagneticButton to="/tools/video-to-frames" variant="primary" size="lg">
             Open Video &rarr; Frames

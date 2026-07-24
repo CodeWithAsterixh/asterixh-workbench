@@ -85,7 +85,7 @@ export interface ZipOptions {
   /** Base filename, without extension. Defaults to "frames". */
   filename?: string;
   /** Deflate level 0 (store) \u2013 9 (max compression). Defaults to 6. */
-  compressionLevel?: number;
+  compressionLevel?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Zero-padded frame filenames, e.g. frame-001.jpg. Defaults to true. */
   padIndex?: boolean;
   onProgress?: (progress: ZipProgress) => void;

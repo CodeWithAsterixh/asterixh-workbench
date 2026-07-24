@@ -9,11 +9,11 @@ export function ToolCard({ tool }: { tool: ToolSpec }) {
   const cardBody = (
     <div
       className={cn(
-        "card h-full flex flex-col justify-between transition-colors duration-300 group",
+        "card h-full flex flex-col gap-2 justify-between transition-colors duration-300 group",
         isLive ? "hover:border-[var(--accent)]" : "opacity-70",
       )}
     >
-      <div>
+      <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <span className={cn("badge", isLive ? "badge--live" : "")}>
             {isLive ? "Live" : "In the works"}
@@ -27,13 +27,13 @@ export function ToolCard({ tool }: { tool: ToolSpec }) {
           )}
         </div>
 
-        <h3 className="text-display-sm mt-6 mb-2" style={{ fontSize: "1.5rem" }}>
+        <h3 className="text-display-sm mt-8 mb-3" style={{ fontSize: "1.5rem" }}>
           {tool.name}
         </h3>
         <p className="text-secondary text-sm">{tool.tagline}</p>
       </div>
 
-      <div className="flex flex-wrap gap-2 mt-8">
+      <div className="flex flex-wrap gap-2 mt-10">
         {tool.tags.map((tag) => (
           <span key={tag} className="timecode uppercase">
             {tag}

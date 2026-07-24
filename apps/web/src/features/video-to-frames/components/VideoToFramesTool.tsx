@@ -66,10 +66,10 @@ export function VideoToFramesTool() {
   };
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-14">
       {!hasResult && (
         <Reveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <Dropzone
               selectedFile={selectedFile}
               onFileSelected={handleFileSelected}
@@ -113,7 +113,7 @@ export function VideoToFramesTool() {
 
       {hasResult && (
         <Reveal>
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-10">
             <div className="flex items-center justify-between">
               <span className="eyebrow">
                 {frames.length} frames extracted

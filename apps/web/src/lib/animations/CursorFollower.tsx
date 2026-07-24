@@ -17,12 +17,13 @@ interface MagneticRect {
  * fully inert on touch devices and respects prefers-reduced-motion.
  */
 export function CursorFollower() {
-  const [enabled] = useState(() => {
-    if (typeof window === "undefined") return false;
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    return fine && !reduced;
-  });
+    setEnabled(fine && !reduced);
+  }, []);
   const [variant, setVariant] = useState<"default" | "magnetic" | "text" | "link">("default");
   const [visible, setVisible] = useState(false);
   const [magneticRect, setMagneticRect] = useState<MagneticRect | null>(null);
