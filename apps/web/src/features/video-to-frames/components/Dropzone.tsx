@@ -85,7 +85,7 @@ export function Dropzone({ selectedFile, onFileSelected, onUseSample, disabled }
             <UploadCloud size={28} strokeWidth={1.25} className="text-[var(--text-tertiary)]" />
             <div>
               <p className="text-sm text-[var(--text-primary)]">Drop a video, or click to browse</p>
-              <p className="timecode mt-1">Stays on this device \u00b7 up to {formatBytes(MAX_UPLOAD_BYTES)}</p>
+              <p className="timecode mt-1">Stays on this device, up to {formatBytes(MAX_UPLOAD_BYTES)}</p>
             </div>
           </>
         )}
@@ -97,7 +97,7 @@ export function Dropzone({ selectedFile, onFileSelected, onUseSample, disabled }
         type="button"
         onClick={onUseSample}
         disabled={disabled}
-        className="btn btn--ghost inline-flex items-center gap-2 mt-4 text-sm disabled:opacity-50"
+        className="btn btn--ghost inline-flex items-center gap-2 px-0! mt-4 text-sm disabled:opacity-50"
       >
         <PlayCircle size={16} strokeWidth={1.5} />
         Try the sample clip instead

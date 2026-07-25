@@ -33,7 +33,7 @@ export function OptionsPanel({
   disabled,
 }: OptionsPanelProps) {
   return (
-    <div className="card">
+    <div className="card flex flex-col gap-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label htmlFor="frame-count">Frame count</label>

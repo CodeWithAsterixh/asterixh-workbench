@@ -1,11 +1,25 @@
 # Workbench
 
-A home for small, sharp browser tools. First one on the bench: **Video →
-Frames**, which slices a video into a preloaded, zip-ready frame sequence
-entirely client-side.
+A home for small, sharp browser tools \u2014 twelve of them, so far. Every one
+runs entirely client-side: nothing you feed them is uploaded anywhere.
 
-This is a fresh project — the only things carried over from the old
-prototype are the scroll/animation primitives and the video-to-frames
+| Tool | What it does |
+| --- | --- |
+| Video \u2192 Frames | Video \u2192 preloaded, zip-ready frame sequence |
+| Image Compressor | Batch recompress with live before/after size |
+| Favicon Generator | One image \u2192 full icon set + manifest, zipped |
+| Sprite Sheet Packer | Images \u2192 one packed sheet + JSON manifest |
+| Contact Sheet | Images \u2192 one labeled grid PNG |
+| Design Token Extractor | Image \u2192 dominant palette \u2192 CSS/Tailwind/JSON |
+| GIF Maker | Images \u2192 looping animated GIF |
+| PDF Split & Merge | Merge PDFs or split one into pages |
+| QR Code Generator | Text/URL \u2192 downloadable PNG or SVG |
+| JSON Formatter | Format, minify, validate with line/column errors |
+| Regex Tester | Live match highlighting + capture groups |
+| Dev Toolkit | Base64, SHA hashing, UUIDs |
+
+This is a fresh project \u2014 the only things carried over from the old
+prototype were the scroll/animation primitives and the video-to-frames
 extraction logic, both rebuilt into the structure below.
 
 ## Structure
@@ -16,24 +30,27 @@ This is a pnpm workspace with two packages:
 workbench/
 ├── apps/
 │   └── web/                        Next.js 16 site (App Router, TS, Tailwind v4)
-│       ├── src/app/                Routes: / , /tools , /tools/video-to-frames
-│       ├── src/components/         Header, Footer, ToolCard (site chrome)
-│       ├── src/features/
-│       │   └── video-to-frames/    This tool's UI: components/ + lib/
+│       ├── src/app/tools/          One route per tool (see table above)
+│       ├── src/components/         Header, Footer, ToolCard, ToolPageShell (site chrome)
+│       ├── src/components/tool-ui/ Shared building blocks: FileDropzone, ProgressBar,
+│       │                           ZipDownloadCard \u2014 used by most of the newer tools
+│       ├── src/features/<slug>/    Each tool's UI: components/ + lib/
 │       ├── src/lib/animations/     Scroll/motion primitives (Reveal, StickyScroll,
 │       │                           ScrollFrameStory, SpinViewer, CursorFollower, …)
+│       ├── src/lib/browser-zip.ts  Shared client-side zip compiler (fflate)
+│       ├── src/lib/canvas-utils.ts Shared image-loading/canvas helpers
 │       ├── src/data/               tools.ts (tool registry), process-frames.ts
-│       └── public/tools/video-to-frames/   Per-tool static assets (sample clip)
+│       └── public/tools/<slug>/    Per-tool static assets (e.g. the sample clip)
 │
 └── packages/
     └── video-to-frames/            @workbench-tools/video-to-frames — standalone
-                                     npm package with the same extraction engine
+                                     npm package with the video tool's extraction engine
 ```
 
-Every tool gets this same three-part shape: a route under `app/tools/<slug>`,
-a feature folder under `src/features/<slug>` (components + lib), and — where
-it makes sense to reuse outside this site — a standalone package under
-`packages/<slug>`.
+Every tool gets this same three-part shape: a route under `app/tools/<slug>`
+using the shared `ToolPageShell`, a feature folder under `src/features/<slug>`
+(components + lib), and — where it makes sense to reuse outside this site — a
+standalone package under `packages/<slug>` (so far, just video-to-frames).
 
 ## Getting started
 
@@ -65,10 +82,15 @@ pnpm lint              # eslint for apps/web
   `ScrollProgressBar`, `SplitHeading`, `CursorFollower`, `AnimatedCounter`,
   and `MagneticButton`/`useMagnetic`.
 - **Tool registry** — `src/data/tools.ts` is the single source of truth for
-  what shows up on `/` and `/tools`. Add an entry there (and a route +
+  what shows up on `/` and `/tools`. Add an entry there (plus a route +
   feature folder) to add a new tool.
+- **Shared tool infrastructure** — most tools beyond the first lean on three
+  things so they don't reinvent the same UI: `components/tool-ui/FileDropzone`,
+  `components/tool-ui/ZipDownloadCard`, and `lib/browser-zip.ts` (the same
+  "prepare everything, then hand back a sized, downloadable result" shape
+  used throughout).
 
-## The tool: Video → Frames
+## The flagship tool: Video → Frames
 
 - **UI**: `apps/web/src/features/video-to-frames` — a drop zone, frame
   count/trim/format controls, a live progress bar through extraction's
@@ -93,4 +115,8 @@ zip.download();
 Nothing here touches a server: extraction runs against a hidden
 `<video>` + `<canvas>`, and the zip is compiled in-memory with
 [fflate](https://github.com/101arrowz/fflate) and handed back as a
-`Blob` + object URL.
+`Blob` + object URL. The other eleven tools follow the same rule — canvas,
+Web Crypto, [pdf-lib](https://github.com/Hopding/pdf-lib),
+[gifenc](https://github.com/mattdesl/gifenc), and
+[qrcode](https://github.com/soldair/node-qrcode) all run client-side too.
+

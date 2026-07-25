@@ -283,6 +283,7 @@ pre {
 
 pre {
   background: var(--surface-sunken);
+  color: var(--text-primary);
   border: 1px solid var(--border);
   padding: var(--space-md);
   overflow-x: auto;

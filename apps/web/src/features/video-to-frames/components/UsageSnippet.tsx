@@ -14,7 +14,7 @@ zip.download();`;
 
 export function UsageSnippet() {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <span className="eyebrow">Same engine, as code</span>
       <h3 className="text-display-sm mt-4 mb-3" style={{ fontSize: "1.75rem" }}>
         Everything above is one package

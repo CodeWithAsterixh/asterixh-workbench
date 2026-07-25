@@ -36,9 +36,9 @@ const capabilities = [
 ];
 
 const stats = [
-  { target: 0, suffix: "", label: "Network requests to extract a frame" },
-  { target: 3, suffix: "", label: "Image formats supported" },
-  { target: 240, suffix: "", label: "Max frames per run" },
+  { target: 12, suffix: "", label: "Tools live on the bench" },
+  { target: 0, suffix: "", label: "Files uploaded to a server, ever" },
+  { target: 100, suffix: "%", label: "Runs in your browser" },
 ];
 
 export default function HomePage() {
@@ -49,7 +49,7 @@ export default function HomePage() {
       <section data-theme="shell" className="relative h-dvh pt-32 overflow-hidden">
         <div className="container flex flex-col pb-22 gap-5">
           <Reveal>
-            <span className="eyebrow">Workbench &middot; Tool 01 live</span>
+            <span className="eyebrow">Workbench &middot; 12 tools live</span>
           </Reveal>
 
           <SplitHeading
@@ -61,8 +61,8 @@ export default function HomePage() {
           <Reveal delay={0.3}>
             <p className="lead mt-10">
               Workbench is a growing set of single-purpose browser tools \u2014 no accounts, no
-              uploads, no server round-trip. First on the bench: turn any video into a preloaded,
-              zip-ready frame sequence.
+              uploads, no server round-trip. From slicing video into frames to formatting JSON,
+              everything here runs entirely on your machine.
             </p>
           </Reveal>
 
@@ -141,7 +141,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-4">
           <Reveal>
             <span className="eyebrow">The shop floor</span>
-            <h2 className="text-display-md mt-6 max-w-2xl">One tool live. More on the bench.</h2>
+            <h2 className="text-display-md mt-6 max-w-2xl">Twelve tools live. More on the bench.</h2>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
@@ -173,10 +173,10 @@ export default function HomePage() {
         <div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-12">
           <div>
             <span className="eyebrow">Get to work</span>
-            <h2 className="text-display-sm mt-6 max-w-md">Ready to slice something up?</h2>
+            <h2 className="text-display-sm mt-6 max-w-md">Ready to pick up a tool?</h2>
           </div>
-          <MagneticButton to="/tools/video-to-frames" variant="primary" size="lg">
-            Open Video &rarr; Frames
+          <MagneticButton to="/tools" variant="primary" size="lg">
+            Browse all tools
             <ArrowRight size={16} strokeWidth={1.75} />
           </MagneticButton>
         </div>
