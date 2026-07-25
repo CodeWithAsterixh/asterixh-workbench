@@ -118,6 +118,15 @@ export const tools: ToolSpec[] = [
     tags: ["images", "dev"],
     href: "/tools/qr-code",
   },
+  {
+    slug: "text-shuffler",
+    name: "Text Shuffler",
+    tagline: "Split on any delimiter, shuffle, rejoin.",
+    description: "Pick a delimiter, split your text into pieces, shuffle them, and rejoin into a new order.",
+    status: "live",
+    tags: ["text"],
+    href: "/tools/text-shuffler",
+  },
 ];
 
 export function getTool(slug: string): ToolSpec | undefined {

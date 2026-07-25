@@ -1,6 +1,6 @@
 # Workbench
 
-A home for small, sharp browser tools \u2014 twelve of them, so far. Every one
+A home for small, sharp browser tools \u2014 thirteen of them, so far. Every one
 runs entirely client-side: nothing you feed them is uploaded anywhere.
 
 | Tool | What it does |
@@ -17,6 +17,7 @@ runs entirely client-side: nothing you feed them is uploaded anywhere.
 | JSON Formatter | Format, minify, validate with line/column errors |
 | Regex Tester | Live match highlighting + capture groups |
 | Dev Toolkit | Base64, SHA hashing, UUIDs |
+| Text Shuffler | Split text on any delimiter, shuffle, rejoin |
 
 This is a fresh project \u2014 the only things carried over from the old
 prototype were the scroll/animation primitives and the video-to-frames
