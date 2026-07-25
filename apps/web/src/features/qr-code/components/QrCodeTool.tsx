@@ -17,7 +17,7 @@ export function QrCodeTool() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      <div className="card">
+      <div className="card lg:sticky top-30">
         <label htmlFor="qr-text">Text or URL</label>
         <textarea
           id="qr-text"
@@ -48,7 +48,7 @@ export function QrCodeTool() {
 
           <div>
             <label htmlFor="qr-size">Size</label>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 py-3">
               <input
                 id="qr-size"
                 type="range"

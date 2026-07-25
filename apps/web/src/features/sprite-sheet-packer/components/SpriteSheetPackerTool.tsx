@@ -35,7 +35,7 @@ export function SpriteSheetPackerTool() {
               hint={files.length > 0 ? `${files.length} selected` : "Any order \u2014 packed left to right, top to bottom"}
             />
 
-            <div className="card">
+            <div className="card h-full flex flex-col gap-6 justify-center">
               <label htmlFor="padding">Padding between frames</label>
               <div className="flex items-center gap-3">
                 <input

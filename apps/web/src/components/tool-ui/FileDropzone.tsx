@@ -50,7 +50,7 @@ export function FileDropzone({
   );
 
   return (
-    <div>
+    <div className="h-full min-h-fit flex flex-col gap-3">
       <div
         role="button"
         tabIndex={0}
@@ -69,7 +69,7 @@ export function FileDropzone({
           if (!disabled) handleFiles(e.dataTransfer.files);
         }}
         className={cn(
-          "panel-frame flex flex-col items-center justify-center text-center gap-3 py-16 px-6 cursor-pointer transition-colors duration-200",
+          "panel-frame flex flex-col items-center justify-center text-center gap-3 py-16 px-6 h-full cursor-pointer transition-colors duration-200",
           isDragging ? "border-[var(--accent)]" : "",
           disabled ? "opacity-60 cursor-not-allowed pointer-events-none" : "",
         )}

@@ -40,7 +40,7 @@ export function ImageCompressorTool() {
       {!hasResult && (
         <Reveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div>
+            <div className="h-full">
               <FileDropzone
                 accept="image/*"
                 multiple
@@ -51,7 +51,7 @@ export function ImageCompressorTool() {
               />
             </div>
 
-            <div className="card">
+            <div className="card flex flex-col gap-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="format">Output format</label>

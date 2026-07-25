@@ -44,7 +44,7 @@ export function DesignTokensTool() {
               icon={<Palette size={28} strokeWidth={1.25} className="text-[var(--text-tertiary)]" />}
             />
 
-            <div className="card">
+            <div className="card h-full min-h-fit flex flex-col gap-6">
               <label htmlFor="color-count">Colors to extract</label>
               <div className="flex items-center gap-3">
                 <input

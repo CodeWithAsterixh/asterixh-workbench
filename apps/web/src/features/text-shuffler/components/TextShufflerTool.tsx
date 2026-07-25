@@ -43,7 +43,7 @@ export function TextShufflerTool() {
         />
       </div>
 
-      <div className="card">
+      <div className="card flex flex-col gap-6">
         <label>Split &amp; join with</label>
         <div className="flex flex-wrap gap-2 mb-4">
           {DELIMITER_PRESETS.map((preset) => (
@@ -111,7 +111,7 @@ export function TextShufflerTool() {
               </div>
 
               <div className="card">
-                <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">{outcome.result}</p>
+                <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-(--text-primary)">{outcome.result}</p>
               </div>
 
               <div className="flex flex-wrap gap-2">

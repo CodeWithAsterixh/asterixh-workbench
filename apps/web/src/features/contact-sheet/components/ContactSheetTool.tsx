@@ -35,7 +35,7 @@ export function ContactSheetTool() {
               hint={files.length > 0 ? `${files.length} selected` : "Arranged in the order you select them"}
             />
 
-            <div className="card">
+            <div className="card h-full min-h-fit flex flex-col gap-6 justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="title">Title</label>
@@ -50,7 +50,7 @@ export function ContactSheetTool() {
                 </div>
                 <div>
                   <label htmlFor="columns">Columns</label>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 py-3">
                     <input
                       id="columns"
                       type="range"

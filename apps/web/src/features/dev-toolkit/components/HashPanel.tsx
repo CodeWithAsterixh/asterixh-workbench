@@ -56,7 +56,7 @@ export function HashPanel() {
       </div>
 
       <div className="card flex items-center justify-between gap-4">
-        <code className="text-sm break-all">{hash}</code>
+        <code className="text-sm break-all text-(--text-primary)">{hash}</code>
         <button type="button" onClick={handleCopy} className="btn btn--secondary flex-shrink-0">
           {copied ? <Check size={15} strokeWidth={1.75} /> : <Copy size={15} strokeWidth={1.75} />}
           {copied ? "Copied" : "Copy"}
