@@ -61,7 +61,7 @@ export function Base64Panel() {
       </div>
       <p className="timecode flex items-center gap-2">
         <ArrowDownUp size={13} strokeWidth={1.75} />
-        Edit either side \u2014 the other updates automatically
+        Edit either side — the other updates automatically
       </p>
       {error && (
         <div className="flex items-center gap-2 text-sm" style={{ color: "var(--alert)" }}>

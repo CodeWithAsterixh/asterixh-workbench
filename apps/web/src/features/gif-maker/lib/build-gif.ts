@@ -33,7 +33,7 @@ export async function buildGif(
     const img = i === 0 ? firstImg : await loadImageFromFile(files[i]!);
 
     // Cover-fit: scale to fill the output frame, center-cropping any excess,
-    // so every source image \u2014 whatever its own size \u2014 lands consistently.
+    // so every source image — whatever its own size — lands consistently.
     const scale = Math.max(width / img.naturalWidth, height / img.naturalHeight);
     const drawW = img.naturalWidth * scale;
     const drawH = img.naturalHeight * scale;

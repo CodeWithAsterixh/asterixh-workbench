@@ -6,10 +6,10 @@ import { useQrCode } from "../lib/useQrCode";
 import type { ErrorCorrectionLevel } from "../lib/generate-qr";
 
 const ERROR_LEVELS: { value: ErrorCorrectionLevel; label: string }[] = [
-  { value: "L", label: "L \u2014 low (7%)" },
-  { value: "M", label: "M \u2014 medium (15%)" },
-  { value: "Q", label: "Q \u2014 quartile (25%)" },
-  { value: "H", label: "H \u2014 high (30%)" },
+  { value: "L", label: "L — low (7%)" },
+  { value: "M", label: "M — medium (15%)" },
+  { value: "Q", label: "Q — quartile (25%)" },
+  { value: "H", label: "H — high (30%)" },
 ];
 
 export function QrCodeTool() {

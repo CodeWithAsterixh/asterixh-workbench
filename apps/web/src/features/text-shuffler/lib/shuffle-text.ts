@@ -17,7 +17,7 @@ export const DELIMITER_PRESETS: DelimiterPreset[] = [
 /**
  * Splits text on a delimiter. An empty delimiter splits into individual
  * characters (by Unicode code point, so emoji/surrogate pairs survive
- * intact) rather than throwing \u2014 a character shuffle is a legitimate,
+ * intact) rather than throwing — a character shuffle is a legitimate,
  * if extreme, use of this tool.
  */
 export function splitText(text: string, delimiter: string, trimPieces: boolean): string[] {
@@ -25,7 +25,7 @@ export function splitText(text: string, delimiter: string, trimPieces: boolean):
   return trimPieces ? pieces.map((p) => p.trim()) : pieces;
 }
 
-/** Unbiased in-place Fisher\u2013Yates (Durstenfeld) shuffle, applied to a copy. */
+/** Unbiased in-place Fisher–Yates (Durstenfeld) shuffle, applied to a copy. */
 export function shuffleArray<T>(items: T[]): T[] {
   const arr = [...items];
   for (let i = arr.length - 1; i > 0; i--) {

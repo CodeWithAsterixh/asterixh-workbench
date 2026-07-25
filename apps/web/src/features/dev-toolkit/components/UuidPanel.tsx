@@ -47,7 +47,7 @@ export function UuidPanel() {
 
       <div className="card flex flex-col gap-2">
         {uuids.map((id) => (
-          <code key={id} className="text-sm">
+          <code key={id} className="text-sm text-(--text-primary)">
             {id}
           </code>
         ))}

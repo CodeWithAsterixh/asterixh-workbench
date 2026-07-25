@@ -3,7 +3,7 @@ import { ToolPageShell } from "@/components/ToolPageShell";
 import { JsonFormatterTool } from "@/features/json-formatter";
 
 export const metadata: Metadata = {
-  title: "JSON Formatter \u2014 Workbench",
+  title: "JSON Formatter — Workbench",
   description: "Format, minify, and validate JSON entirely in your browser.",
 };
 

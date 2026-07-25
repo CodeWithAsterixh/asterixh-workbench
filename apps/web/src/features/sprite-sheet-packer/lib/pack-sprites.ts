@@ -18,7 +18,7 @@ export interface PackResult {
 }
 
 /**
- * Packs images into a uniform grid \u2014 every cell sized to the largest
+ * Packs images into a uniform grid — every cell sized to the largest
  * source image, so the manifest's per-frame coordinates line up cleanly.
  * Not a bin-packer (no rotation, no variable cell sizes); for uneven
  * source sizes that leaves some padding, which is the trade for a manifest

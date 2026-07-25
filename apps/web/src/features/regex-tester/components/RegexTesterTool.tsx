@@ -5,7 +5,7 @@ import { AlertTriangle } from "lucide-react";
 import { runRegex } from "../lib/run-regex";
 
 const FLAG_OPTIONS: { flag: string; label: string; hint: string }[] = [
-  { flag: "g", label: "g", hint: "global \u2014 find all matches" },
+  { flag: "g", label: "g", hint: "global — find all matches" },
   { flag: "i", label: "i", hint: "case-insensitive" },
   { flag: "m", label: "m", hint: "multiline ^$" },
   { flag: "s", label: "s", hint: "dot matches newline" },
@@ -108,14 +108,14 @@ export function RegexTesterTool() {
             {result.matches.map((m, i) => (
               <div key={i} className="pb-4 border-b border-[var(--border)] last:border-0 last:pb-0">
                 <div className="flex items-center justify-between text-(--accent)">
-                  <code className="text-sm">{m.match || "\u2014"}</code>
+                  <code className="text-sm">{m.match || "—"}</code>
                   <span className="timecode">at {m.index}</span>
                 </div>
                 {m.groups.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {m.groups.map((g, gi) => (
                       <span key={gi} className="badge">
-                        ${gi + 1}: {g || "\u2014"}
+                        ${gi + 1}: {g || "—"}
                       </span>
                     ))}
                   </div>

@@ -6,7 +6,7 @@ import { DELIMITER_PRESETS, shuffleText, type ShuffleOutcome } from "../lib/shuf
 import { cn } from "@/lib/utils";
 
 const SAMPLE_TEXT =
-  "the crown of life, not hurt at all by the second death, the hidden manna, the authority to rule all nations with an iron scepter, name written in the book of life, write on him God\u2019s name, the name of the Holy City, the new Jerusalem, and Jesus\u2019 new name";
+  "the crown of life, not hurt at all by the second death, the hidden manna, the authority to rule all nations with an iron scepter, name written in the book of life, write on him God’s name, the name of the Holy City, the new Jerusalem, and Jesus’ new name";
 
 export function TextShufflerTool() {
   const [text, setText] = useState(SAMPLE_TEXT);
@@ -96,7 +96,7 @@ export function TextShufflerTool() {
           {outcome.pieces.length <= 1 ? (
             <div className="card" style={{ borderColor: "var(--alert)" }}>
               <p className="text-sm" style={{ color: "var(--alert)" }}>
-                That delimiter only produced {outcome.pieces.length} piece{outcome.pieces.length === 1 ? "" : "s"} \u2014
+                That delimiter only produced {outcome.pieces.length} piece{outcome.pieces.length === 1 ? "" : "s"} —
                 nothing to shuffle. Try a different delimiter.
               </p>
             </div>
@@ -117,7 +117,7 @@ export function TextShufflerTool() {
               <div className="flex flex-wrap gap-2">
                 {outcome.shuffled.map((piece, i) => (
                   <span key={`${piece}-${i}`} className="badge">
-                    {piece || "\u2014"}
+                    {piece || "—"}
                   </span>
                 ))}
               </div>

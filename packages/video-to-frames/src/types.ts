@@ -84,7 +84,7 @@ export interface ZipProgress {
 export interface ZipOptions {
   /** Base filename, without extension. Defaults to "frames". */
   filename?: string;
-  /** Deflate level 0 (store) \u2013 9 (max compression). Defaults to 6. */
+  /** Deflate level 0 (store) – 9 (max compression). Defaults to 6. */
   compressionLevel?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   /** Zero-padded frame filenames, e.g. frame-001.jpg. Defaults to true. */
   padIndex?: boolean;
@@ -95,7 +95,7 @@ export interface ZipMetadata {
   fileCount: number;
   /** Sum of each frame's encoded byte size before compression. */
   uncompressedBytes: number;
-  /** Final .zip size in bytes \u2014 known before any download is triggered. */
+  /** Final .zip size in bytes — known before any download is triggered. */
   zipSizeBytes: number;
   /** Human-readable size, e.g. "8.4 MB". */
   formattedSize: string;
@@ -106,7 +106,7 @@ export interface ZipMetadata {
 
 export interface ZipResult extends ZipMetadata {
   blob: Blob;
-  /** Object URL for the zip \u2014 valid until `revoke()` is called. */
+  /** Object URL for the zip — valid until `revoke()` is called. */
   url: string;
   /** Triggers a normal browser file-save for the zip. */
   download: () => void;
@@ -117,7 +117,7 @@ export interface ZipResult extends ZipMetadata {
 export interface VideoToFramesResult {
   frames: ExtractedFrame[];
   video: VideoInfo;
-  /** Sum of `frame.sizeBytes` across every frame \u2014 known immediately, before any zip is built. */
+  /** Sum of `frame.sizeBytes` across every frame — known immediately, before any zip is built. */
   totalSizeBytes: number;
   /** Compiles every frame into a downloadable zip, with its own progress + metadata. */
   toZip: (options?: ZipOptions) => Promise<ZipResult>;

@@ -23,7 +23,7 @@ const capabilities = [
   },
   {
     title: "Trim both ends",
-    body: "Skip fade-ins and fade-outs without re-encoding anything \u2014 just a start and end percentage.",
+    body: "Skip fade-ins and fade-outs without re-encoding anything — just a start and end percentage.",
   },
   {
     title: "Every frame preloaded",
@@ -60,7 +60,7 @@ export default function HomePage() {
 
           <Reveal delay={0.3}>
             <p className="lead mt-10">
-              Workbench is a growing set of single-purpose browser tools \u2014 no accounts, no
+              Workbench is a growing set of single-purpose browser tools — no accounts, no
               uploads, no server round-trip. From slicing video into frames to formatting JSON,
               everything here runs entirely on your machine.
             </p>

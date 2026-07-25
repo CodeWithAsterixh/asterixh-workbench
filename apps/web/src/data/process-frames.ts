@@ -102,6 +102,6 @@ export const heroChapters: FrameStoryChapter[] = [
   {
     eyebrow: "Step 04",
     title: "One zip, sized before you commit",
-    body: "Frames compile into a single archive. File count and exact size are shown before the download starts \u2014 not after.",
+    body: "Frames compile into a single archive. File count and exact size are shown before the download starts — not after.",
   },
 ];

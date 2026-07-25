@@ -47,7 +47,7 @@ export function ImageCompressorTool() {
                 onFiles={setFiles}
                 disabled={isBusy}
                 title="Drop images, or click to browse"
-                hint={files.length > 0 ? `${files.length} selected` : "PNG, JPEG, or WebP \u2014 any number of files"}
+                hint={files.length > 0 ? `${files.length} selected` : "PNG, JPEG, or WebP — any number of files"}
               />
             </div>
 
@@ -100,7 +100,7 @@ export function ImageCompressorTool() {
                     />
                     <span className="timecode w-12 text-right">{Math.round(quality * 100)}%</span>
                   </div>
-                  {format === "image/png" && <p className="timecode mt-1">PNG is lossless \u2014 quality doesn&apos;t apply</p>}
+                  {format === "image/png" && <p className="timecode mt-1">PNG is lossless — quality doesn&apos;t apply</p>}
                 </div>
               </div>
 

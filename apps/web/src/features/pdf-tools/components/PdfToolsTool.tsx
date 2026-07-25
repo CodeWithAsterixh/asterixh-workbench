@@ -82,7 +82,7 @@ export function PdfToolsTool() {
               onFiles={addFiles}
               disabled={isBusy}
               title={mode === "merge" ? "Drop PDFs, or click to browse" : "Drop a PDF, or click to browse"}
-              hint={mode === "merge" ? "Add as many as you like \u2014 reorder them below" : "Every page becomes its own PDF"}
+              hint={mode === "merge" ? "Add as many as you like — reorder them below" : "Every page becomes its own PDF"}
             />
 
             {mode === "merge" && files.length > 0 && (

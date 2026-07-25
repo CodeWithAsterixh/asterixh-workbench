@@ -25,7 +25,7 @@ export function usePdfTools() {
       setStatus("ready");
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Couldn't merge those PDFs \u2014 make sure each file is a valid PDF.");
+      setError(err instanceof Error ? err.message : "Couldn't merge those PDFs — make sure each file is a valid PDF.");
     }
   }, []);
 
@@ -51,7 +51,7 @@ export function usePdfTools() {
       setStatus("ready");
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Couldn't split that PDF \u2014 make sure it's a valid file.");
+      setError(err instanceof Error ? err.message : "Couldn't split that PDF — make sure it's a valid file.");
     }
   }, []);
 

@@ -36,7 +36,7 @@ export async function buildContactSheet(
   if (!ctx) throw new Error("Canvas 2D context is unavailable in this browser.");
 
   // Exported artifacts stay on a neutral light background regardless of
-  // the site's own theme \u2014 this is a shareable image, not UI chrome.
+  // the site's own theme — this is a shareable image, not UI chrome.
   ctx.fillStyle = "#f4f1e6";
   ctx.fillRect(0, 0, width, height);
 
@@ -80,8 +80,8 @@ export async function buildContactSheet(
 function truncateLabel(name: string, maxWidth: number, ctx: CanvasRenderingContext2D): string {
   if (ctx.measureText(name).width <= maxWidth) return name;
   let truncated = name;
-  while (truncated.length > 1 && ctx.measureText(`${truncated}\u2026`).width > maxWidth) {
+  while (truncated.length > 1 && ctx.measureText(`${truncated}…`).width > maxWidth) {
     truncated = truncated.slice(0, -1);
   }
-  return `${truncated}\u2026`;
+  return `${truncated}…`;
 }

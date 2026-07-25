@@ -4,7 +4,7 @@ import { ToolCard } from "@/components/ToolCard";
 import { tools } from "@/data/tools";
 
 export const metadata: Metadata = {
-  title: "Tools \u2014 Workbench",
+  title: "Tools — Workbench",
   description: "Every tool on Workbench, in one place.",
 };
 
@@ -16,7 +16,7 @@ export default function ToolsPage() {
           <span className="eyebrow">All tools</span>
           <h1 className="text-display-lg mt-8 max-w-3xl">The whole bench, in one place</h1>
           <p className="lead mt-8">
-            Thirteen tools live today, each built on the same client-side-only foundation \u2014
+            Thirteen tools live today, each built on the same client-side-only foundation —
             more are on the bench.
           </p>
         </Reveal>

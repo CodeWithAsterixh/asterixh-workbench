@@ -62,7 +62,7 @@ export function HashPanel() {
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <p className="timecode">MD5 isn&apos;t offered \u2014 the Web Crypto API only implements the SHA family.</p>
+      <p className="timecode">MD5 isn&apos;t offered — the Web Crypto API only implements the SHA family.</p>
     </div>
   );
 }

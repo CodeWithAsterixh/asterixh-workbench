@@ -22,7 +22,7 @@ export function FaviconGeneratorTool() {
             onFiles={(files) => files[0] && void generate(files[0])}
             disabled={isBusy}
             title="Drop a square-ish source image, or click to browse"
-            hint="PNG or JPEG, ideally 512\u00d7512 or larger"
+            hint="PNG or JPEG, ideally 512×512 or larger"
           />
         </Reveal>
       )}
@@ -58,14 +58,14 @@ export function FaviconGeneratorTool() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={icon.dataUrl}
-                    alt={`${icon.size}\u00d7${icon.size} icon`}
+                    alt={`${icon.size}×${icon.size} icon`}
                     width={Math.min(icon.size, 64)}
                     height={Math.min(icon.size, 64)}
                     style={{ imageRendering: icon.size <= 32 ? "pixelated" : "auto" }}
                   />
                   <div>
                     <p className="text-sm text-[var(--text-primary)]">
-                      {icon.size}\u00d7{icon.size}
+                      {icon.size}×{icon.size}
                     </p>
                     <p className="timecode mt-1">{icon.purpose}</p>
                   </div>

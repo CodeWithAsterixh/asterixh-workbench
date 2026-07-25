@@ -32,7 +32,7 @@ export function SpriteSheetPackerTool() {
               onFiles={setFiles}
               disabled={isBusy}
               title="Drop images, or click to browse"
-              hint={files.length > 0 ? `${files.length} selected` : "Any order \u2014 packed left to right, top to bottom"}
+              hint={files.length > 0 ? `${files.length} selected` : "Any order — packed left to right, top to bottom"}
             />
 
             <div className="card h-full flex flex-col gap-6 justify-center">

@@ -1,25 +1,25 @@
 # Workbench
 
-A home for small, sharp browser tools \u2014 thirteen of them, so far. Every one
+A home for small, sharp browser tools — thirteen of them, so far. Every one
 runs entirely client-side: nothing you feed them is uploaded anywhere.
 
 | Tool | What it does |
 | --- | --- |
-| Video \u2192 Frames | Video \u2192 preloaded, zip-ready frame sequence |
+| Video →Frames | Video →preloaded, zip-ready frame sequence |
 | Image Compressor | Batch recompress with live before/after size |
-| Favicon Generator | One image \u2192 full icon set + manifest, zipped |
-| Sprite Sheet Packer | Images \u2192 one packed sheet + JSON manifest |
-| Contact Sheet | Images \u2192 one labeled grid PNG |
-| Design Token Extractor | Image \u2192 dominant palette \u2192 CSS/Tailwind/JSON |
-| GIF Maker | Images \u2192 looping animated GIF |
+| Favicon Generator | One image →full icon set + manifest, zipped |
+| Sprite Sheet Packer | Images →one packed sheet + JSON manifest |
+| Contact Sheet | Images →one labeled grid PNG |
+| Design Token Extractor | Image →dominant palette →CSS/Tailwind/JSON |
+| GIF Maker | Images →looping animated GIF |
 | PDF Split & Merge | Merge PDFs or split one into pages |
-| QR Code Generator | Text/URL \u2192 downloadable PNG or SVG |
+| QR Code Generator | Text/URL →downloadable PNG or SVG |
 | JSON Formatter | Format, minify, validate with line/column errors |
 | Regex Tester | Live match highlighting + capture groups |
 | Dev Toolkit | Base64, SHA hashing, UUIDs |
 | Text Shuffler | Split text on any delimiter, shuffle, rejoin |
 
-This is a fresh project \u2014 the only things carried over from the old
+This is a fresh project — the only things carried over from the old
 prototype were the scroll/animation primitives and the video-to-frames
 extraction logic, both rebuilt into the structure below.
 
@@ -34,7 +34,7 @@ workbench/
 │       ├── src/app/tools/          One route per tool (see table above)
 │       ├── src/components/         Header, Footer, ToolCard, ToolPageShell (site chrome)
 │       ├── src/components/tool-ui/ Shared building blocks: FileDropzone, ProgressBar,
-│       │                           ZipDownloadCard \u2014 used by most of the newer tools
+│       │                           ZipDownloadCard — used by most of the newer tools
 │       ├── src/features/<slug>/    Each tool's UI: components/ + lib/
 │       ├── src/lib/animations/     Scroll/motion primitives (Reveal, StickyScroll,
 │       │                           ScrollFrameStory, SpinViewer, CursorFollower, …)

@@ -11,10 +11,10 @@ export interface ToolSpec {
 export const tools: ToolSpec[] = [
   {
     slug: "video-to-frames",
-    name: "Video \u2192 Frames",
+    name: "Video →Frames",
     tagline: "Slice any video into a numbered, zip-ready frame sequence.",
     description:
-      "Drop in a video, pick a frame count, and get back a preloaded set of frames \u2014 trimmed, sized, and ready to compile into a single .zip. Runs entirely in your browser; nothing is uploaded.",
+      "Drop in a video, pick a frame count, and get back a preloaded set of frames — trimmed, sized, and ready to compile into a single .zip. Runs entirely in your browser; nothing is uploaded.",
     status: "live",
     tags: ["video", "images", "zip"],
     href: "/tools/video-to-frames",
@@ -58,7 +58,7 @@ export const tools: ToolSpec[] = [
   {
     slug: "favicon-generator",
     name: "Favicon Generator",
-    tagline: "One image in, every icon size out \u2014 zipped.",
+    tagline: "One image in, every icon size out — zipped.",
     description: "Generates the full favicon/app-icon set from a single image, with a manifest and copy-paste HTML.",
     status: "live",
     tags: ["images", "zip"],
@@ -68,7 +68,7 @@ export const tools: ToolSpec[] = [
     slug: "sprite-sheet-packer",
     name: "Sprite Sheet Packer",
     tagline: "Pack images into one sheet plus a JSON manifest.",
-    description: "For game dev and CSS sprite animations \u2014 pack multiple images into a grid with frame coordinates.",
+    description: "For game dev and CSS sprite animations — pack multiple images into a grid with frame coordinates.",
     status: "live",
     tags: ["images", "zip"],
     href: "/tools/sprite-sheet-packer",
@@ -77,7 +77,7 @@ export const tools: ToolSpec[] = [
     slug: "contact-sheet",
     name: "Contact Sheet",
     tagline: "Stitch a batch of images into one labeled grid.",
-    description: "A shareable storyboard/contact sheet from a folder of images \u2014 one PNG out.",
+    description: "A shareable storyboard/contact sheet from a folder of images — one PNG out.",
     status: "live",
     tags: ["images"],
     href: "/tools/contact-sheet",
@@ -95,7 +95,7 @@ export const tools: ToolSpec[] = [
     slug: "pdf-tools",
     name: "PDF Split & Merge",
     tagline: "Combine or break apart PDFs, entirely client-side.",
-    description: "Merge multiple PDFs into one, or split pages out \u2014 no upload.",
+    description: "Merge multiple PDFs into one, or split pages out — no upload.",
     status: "live",
     tags: ["pdf", "zip"],
     href: "/tools/pdf-tools",

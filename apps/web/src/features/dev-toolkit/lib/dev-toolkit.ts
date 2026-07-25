@@ -16,7 +16,7 @@ export function decodeBase64(b64: string): string {
 export const HASH_ALGORITHMS = ["SHA-1", "SHA-256", "SHA-384", "SHA-512"] as const;
 export type HashAlgorithm = (typeof HASH_ALGORITHMS)[number];
 
-/** MD5 isn't offered \u2014 the Web Crypto API only implements the SHA family. */
+/** MD5 isn't offered — the Web Crypto API only implements the SHA family. */
 export async function hashText(text: string, algorithm: HashAlgorithm): Promise<string> {
   const bytes = new TextEncoder().encode(text);
   const digest = await crypto.subtle.digest(algorithm, bytes);
