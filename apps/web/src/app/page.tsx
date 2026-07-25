@@ -36,7 +36,7 @@ const capabilities = [
 ];
 
 const stats = [
-  { target: 13, suffix: "", label: "Tools live on the bench" },
+  { target: 14, suffix: "", label: "Tools live on the bench" },
   { target: 0, suffix: "", label: "Files uploaded to a server, ever" },
   { target: 100, suffix: "%", label: "Runs in your browser" },
 ];
@@ -49,7 +49,7 @@ export default function HomePage() {
       <section data-theme="shell" className="relative h-dvh pt-32 overflow-hidden">
         <div className="container flex flex-col pb-22 gap-5">
           <Reveal>
-            <span className="eyebrow">Workbench &middot; 13 tools live</span>
+            <span className="eyebrow">Workbench &middot; 14 tools live</span>
           </Reveal>
 
           <SplitHeading
@@ -141,7 +141,7 @@ export default function HomePage() {
         <div className="container flex flex-col gap-4">
           <Reveal>
             <span className="eyebrow">The shop floor</span>
-            <h2 className="text-display-md mt-6 max-w-2xl">Thirteen tools live. More on the bench.</h2>
+            <h2 className="text-display-md mt-6 max-w-2xl">Fourteen tools live. More on the bench.</h2>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">

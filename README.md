@@ -1,6 +1,6 @@
 # Workbench
 
-A home for small, sharp browser tools — thirteen of them, so far. Every one
+A home for small, sharp browser tools — fourteen of them, so far. Every one
 runs entirely client-side: nothing you feed them is uploaded anywhere.
 
 | Tool | What it does |
