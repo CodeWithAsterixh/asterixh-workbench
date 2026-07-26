@@ -140,6 +140,86 @@ export const howItWorks: Record<string, HowItWorks> = {
       { title: "UUID", body: "Set a count and generate that many v4 UUIDs at once, with a copy-all button." },
     ],
   },
+  "base64-tool": {
+    input: "Any readable text to encode, or any valid Base64 string to decode.",
+    output: "The converted text, ready to copy into code, configs, or messages.",
+    steps: [
+      { title: "Paste text", body: "Start with plain text or an existing Base64 string." },
+      { title: "Encode or decode", body: "Pick the direction you need and let the browser do the conversion locally." },
+      { title: "Inspect the output", body: "The result appears in a second panel so it is easy to verify." },
+      { title: "Copy the result", body: "Move the converted text wherever you need it." },
+    ],
+  },
+  "uuid-generator": {
+    input: "A count of how many UUIDs you want to generate.",
+    output: "A batch of RFC 4122 version 4 UUIDs, ready to copy or regenerate.",
+    steps: [
+      { title: "Pick a count", body: "Choose how many UUIDs you want in the batch." },
+      { title: "Generate", body: "The browser creates each UUID locally using its native crypto API." },
+      { title: "Review the list", body: "Each value is shown on its own line for easy scanning." },
+      { title: "Copy all", body: "Copy the whole batch to paste into config files, test data, or fixtures." },
+    ],
+  },
+  "timestamp-converter": {
+    input: "A local date/time or a Unix timestamp in seconds or milliseconds.",
+    output: "Converted local time, UTC time, ISO string, Unix seconds, and Unix milliseconds.",
+    steps: [
+      { title: "Enter a date", body: "Start with either a local date/time or a Unix timestamp." },
+      { title: "Choose the Unix unit", body: "Switch between seconds and milliseconds to match your source data." },
+      { title: "Read the normalized values", body: "The tool keeps the formats synchronized so each representation is easy to copy." },
+      { title: "Export what you need", body: "Use the copy buttons to move ISO or Unix values into your code or logs." },
+    ],
+  },
+  "color-contrast-checker": {
+    input: "A foreground color and a background color.",
+    output: "A contrast ratio, WCAG pass/fail status, and a live preview of the pair.",
+    steps: [
+      { title: "Choose colors", body: "Pick foreground and background values with the color pickers or type hex codes directly." },
+      { title: "Review the ratio", body: "The checker calculates the contrast ratio using standard WCAG luminance rules." },
+      { title: "Check accessibility", body: "See whether the pair passes AA and AAA text requirements." },
+      { title: "Swap or copy", body: "Flip the colors or copy the ratio for design notes and reviews." },
+    ],
+  },
+  "percentage-calculator": {
+    input: "A base amount, a percentage, and whether you want the result as a raw percentage, an increase, or a decrease.",
+    output: "The calculated percentage value and the final adjusted amount.",
+    steps: [
+      { title: "Enter the numbers", body: "Type the base amount and the percentage you want to apply." },
+      { title: "Pick the operation", body: "Choose whether to get the raw percentage, increase the amount, or decrease it." },
+      { title: "Review the result", body: "The tool shows the percentage value and the final total immediately." },
+      { title: "Copy the summary", body: "Copy the generated calculation into notes, docs, or spreadsheets." },
+    ],
+  },
+  "date-difference-calculator": {
+    input: "Two timestamps in local date/time form.",
+    output: "The gap between them, broken into days, hours, minutes, and seconds.",
+    steps: [
+      { title: "Choose the two dates", body: "Pick a start and end timestamp using the built-in date controls." },
+      { title: "Swap if needed", body: "Flip the order if you want to measure the difference the other way around." },
+      { title: "Read the breakdown", body: "The calculator shows the span in multiple time units at once." },
+      { title: "Copy the summary", body: "Use the result in notes, schedules, or project planning." },
+    ],
+  },
+  "word-counter": {
+    input: "Any block of pasted or typed text.",
+    output: "Word count, character count, character count without spaces, lines, paragraphs, sentences, and reading time.",
+    steps: [
+      { title: "Paste text", body: "Drop in a paragraph, article, draft, or any longer block of copy." },
+      { title: "Let the metrics update", body: "The tool counts words, characters, lines, and paragraphs live as you edit." },
+      { title: "Check reading time", body: "Use the estimate to gauge how long the text will take to read." },
+      { title: "Copy or clear", body: "Keep the text, replace it with the sample, or clear it out and start again." },
+    ],
+  },
+  "slug-generator": {
+    input: "Any title, heading, or phrase.",
+    output: "A lowercase, URL-safe slug made from that text.",
+    steps: [
+      { title: "Paste a title", body: "Use a post title, page heading, or any phrase you want to turn into a slug." },
+      { title: "Let it normalize", body: "The tool removes punctuation, accents, and repeated separators." },
+      { title: "Review the slug", body: "You get a clean URL segment that is ready for routes or CMS entries." },
+      { title: "Copy it", body: "Move the slug straight into a CMS, file name, or route definition." },
+    ],
+  },
   "text-shuffler": {
     input: "Any block of text and a delimiter \u2014 a comma, period, space, or any custom string.",
     output: "The same pieces of text, rejoined in a new random order.",

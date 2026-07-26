@@ -26,9 +26,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Workbench — a home for small, sharp tools",
+  title: "Workbench — Browser Tools Platform",
   description:
-    "Workbench is a growing set of single-purpose browser tools. First up: Video → Frames, a client-side tool that turns a video into a preloaded, zip-ready frame sequence — no upload, nothing leaves your machine.",
+    "Workbench is a browser-first tools platform built around speed, privacy, accessibility, SEO, and reusable architecture.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -2,9 +2,10 @@
   "name": "workbench",
   "version": "0.1.0",
   "private": true,
-  "description": "Workbench — a home for small, sharp browser tools.",
+  "description": "Workbench - a browser-first tools platform.",
   "scripts": {
     "dev": "pnpm --filter @workbench-tools/web dev",
+    "start:web": "pnpm --filter @workbench-tools/web start",
     "build": "pnpm --filter @workbench-tools/video-to-frames build && pnpm --filter @workbench-tools/web build",
     "build:package": "pnpm --filter @workbench-tools/video-to-frames build",
     "lint": "pnpm --filter @workbench-tools/web lint",

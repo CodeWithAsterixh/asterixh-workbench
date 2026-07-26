@@ -5,6 +5,7 @@ export type CategoryId =
   | "design"
   | "documents"
   | "developer"
+  | "calculators"
   | "text";
 
 export interface CategorySpec {
@@ -19,7 +20,8 @@ export const categories: CategorySpec[] = [
   { id: "icons-graphics", label: "Icons & Graphics", description: "Generate icon sets and QR codes." },
   { id: "design", label: "Design", description: "Shapes and color systems for real projects." },
   { id: "documents", label: "Documents", description: "Split and merge PDFs." },
-  { id: "developer", label: "Developer Utilities", description: "JSON, regex, and everyday encoding tools." },
+  { id: "developer", label: "Developer Utilities", description: "JSON, regex, encoding, and timestamp tools." },
+  { id: "calculators", label: "Calculators", description: "Percentage and everyday number helpers." },
   { id: "text", label: "Text", description: "Plain-text manipulation." },
 ];
 

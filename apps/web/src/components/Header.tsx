@@ -41,6 +41,12 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
+          <Link
+            href="/strategy"
+            className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+          >
+            Strategy
+          </Link>
           <NavToolsMenu />
           {featuredTool && (
             <MagneticButton to={featuredTool.href} variant="secondary">
@@ -71,6 +77,23 @@ export function Header() {
             style={{ maxHeight: "calc(100dvh - var(--header-height))", overflowY: "auto" }}
           >
             <nav className="container py-6 flex flex-col gap-8">
+              <div className="flex flex-col gap-3">
+                <Link
+                  href="/strategy"
+                  onClick={() => setOpen(false)}
+                  className="text-sm text-[var(--text-primary)]"
+                >
+                  Strategy blueprint
+                </Link>
+                <Link
+                  href="/tools"
+                  onClick={() => setOpen(false)}
+                  className="text-sm text-[var(--text-secondary)]"
+                >
+                  All tools
+                </Link>
+              </div>
+
               {categories.map((category) => {
                 const categoryTools = toolsByCategory(category.id);
                 if (categoryTools.length === 0) return null;

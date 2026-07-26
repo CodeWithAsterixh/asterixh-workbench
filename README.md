@@ -1,7 +1,9 @@
 # Workbench
 
-A home for small, sharp browser tools \u2014 fourteen of them, so far. Every one
-runs entirely client-side: nothing you feed them is uploaded anywhere.
+A browser-first tools platform for developers, designers, creators, and
+everyday internet users. The current site has twenty-two live tools, and the
+long-term plan is to grow into a much larger cluster of linked utilities,
+supporting articles, and reusable browser-processing architecture.
 
 | Tool | What it does |
 | --- | --- |
@@ -20,9 +22,23 @@ runs entirely client-side: nothing you feed them is uploaded anywhere.
 | Dev Toolkit | Base64, SHA hashing, UUIDs |
 | Text Shuffler | Split text on any delimiter, shuffle, rejoin |
 
+See `/tools` for the current live catalog, which now also includes dedicated
+utilities for Base64, timestamps, percentages, color contrast, dates, slugs,
+and word counting.
+
 This is a fresh project \u2014 the only things carried over from the old
 prototype were the scroll/animation primitives and the video-to-frames
 extraction logic, both rebuilt into the structure below.
+
+## Strategy blueprint
+
+The product strategy from the attached blueprint now lives in the app as a
+dedicated page:
+
+- `/strategy` - the platform vision, launch principles, category clusters,
+  architecture layers, and phased roadmap.
+- `src/data/platform-blueprint.ts` - the shared content model used by the
+  homepage and strategy page.
 
 ## Structure
 
@@ -76,6 +92,9 @@ pnpm lint              # eslint for apps/web
   vocabulary (`--surface`, `--text-primary`, `--accent`, …): a dark "shell"
   for marketing/discovery pages, and a light "paper" workspace scoped to a
   tool's own page. See `apps/web/src/app/tokens-*.css`.
+- **Platform pages** — the homepage now presents Workbench as a scalable
+  browser tools platform, while `/strategy` captures the roadmap, growth
+  phases, and architecture goals from the blueprint.
 - **Motion** — `src/lib/animations` holds the reusable primitives: `Reveal`
   (scroll-triggered fade/slide), `Parallax`/`useParallax`, `StickyScroll` /
   `StickyCard` (pinned-while-scrolled layouts), `ZoomScroll`, `ScrollFrameStory`
@@ -131,4 +150,3 @@ Nothing here touches a server: extraction runs against a hidden
 Web Crypto, [pdf-lib](https://github.com/Hopding/pdf-lib),
 [gifenc](https://github.com/mattdesl/gifenc), and
 [qrcode](https://github.com/soldair/node-qrcode) all run client-side too.
-

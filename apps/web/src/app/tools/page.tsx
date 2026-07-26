@@ -2,32 +2,57 @@ import type { Metadata } from "next";
 import { Reveal } from "@/lib/animations";
 import { ToolCard } from "@/components/ToolCard";
 import { categories } from "@/data/categories";
-import { toolsByCategory } from "@/data/tools";
+import { tools, toolsByCategory } from "@/data/tools";
 
 export const metadata: Metadata = {
-  title: "Tools — Workbench",
-  description: "Every tool on Workbench, grouped by category.",
+  title: "Tools - Workbench",
+  description:
+    "Browse the current Workbench tool clusters and see how the platform is organized today.",
 };
+
+const metrics = [
+  { value: tools.length, label: "Live tools" },
+  { value: categories.length, label: "Current categories" },
+  { value: 0, label: "Login walls" },
+];
 
 export default function ToolsPage() {
   return (
     <section data-theme="shell" className="pt-48 pb-36">
-      <div className="container flex flex-col gap-5">
+      <div className="container flex flex-col gap-6">
         <Reveal className="flex flex-col gap-5">
-          <span className="eyebrow">All tools</span>
-          <h1 className="text-display-lg mt-8 max-w-3xl">The whole bench, in one place</h1>
-          <p className="lead mt-8">
-            Fourteen tools live today, grouped by what they do — each built on the same
-            client-side-only foundation.
+          <span className="eyebrow">Current bench</span>
+          <h1 className="text-display-lg mt-4 max-w-3xl">
+            The first clusters are live, and the platform keeps the same shape as it grows.
+          </h1>
+          <p className="lead mt-6 max-w-3xl">
+            Every tool on Workbench is a seed for a larger cluster: one problem, one page, one
+            shared architecture. The goal is to make it easy to add related tools, supporting
+            articles, and internal links without redesigning the whole site each time.
           </p>
         </Reveal>
 
-        <div className="flex flex-col gap-20 mt-20">
+        <div className="grid gap-6 md:grid-cols-3 mt-6">
+          {metrics.map((metric) => (
+            <Reveal key={metric.label}>
+              <div className="card">
+                <span className="text-display-md font-mono">{metric.value}</span>
+                <p className="text-secondary text-sm mt-2">{metric.label}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-20 mt-14">
           {categories.map((category) => {
             const categoryTools = toolsByCategory(category.id);
             if (categoryTools.length === 0) return null;
             return (
-              <div key={category.id} id={category.id} style={{ scrollMarginTop: "var(--header-height)" }}>
+              <div
+                key={category.id}
+                id={category.id}
+                style={{ scrollMarginTop: "var(--header-height)" }}
+              >
                 <Reveal>
                   <span className="eyebrow">{category.label}</span>
                   <p className="text-secondary text-sm mt-3 max-w-md">{category.description}</p>

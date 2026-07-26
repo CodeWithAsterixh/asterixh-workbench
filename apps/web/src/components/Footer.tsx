@@ -10,14 +10,30 @@ export function Footer() {
         <div>
           <span className="font-serif text-lg text-[var(--text-primary)]">Workbench</span>
           <p className="text-secondary text-sm mt-4 max-w-xs">
-            A growing set of small, sharp tools that run entirely in your browser. Nothing you
-            feed them leaves your machine unless you choose to export it.
+            A browser-first tools platform designed to scale from a small starter bench into a
+            much larger cluster of fast, private, accessible utilities.
           </p>
         </div>
 
         <div>
-          <span className="eyebrow">Categories</span>
-          <ul className="mt-5 grid grid-cols-2 gap-3">
+          <span className="eyebrow">Explore</span>
+          <ul className="mt-5 grid grid-cols-1 gap-3">
+            <li>
+              <Link
+                href="/strategy"
+                className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                Strategy blueprint
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/tools"
+                className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                All tools
+              </Link>
+            </li>
             {categories.map((category) => (
               <li key={category.id}>
                 <Link
@@ -32,18 +48,20 @@ export function Footer() {
         </div>
 
         <div>
-          <span className="eyebrow">Built with</span>
+          <span className="eyebrow">Launch rules</span>
           <p className="timecode mt-5 leading-relaxed">
-            Next.js &middot; Motion &middot; fflate
+            No login required
             <br />
-            Video &rarr; Frames ships as <code>@workbench-tools/video-to-frames</code> on npm.
+            No ads in phase 1
+            <br />
+            Browser processing first
           </p>
         </div>
       </div>
 
       <div className="container pb-10 flex items-center justify-between">
         <span className="timecode">&copy; {year} Workbench</span>
-        <span className="timecode">Every tool runs client-side</span>
+        <span className="timecode">Built for a larger tool platform</span>
       </div>
     </footer>
   );
