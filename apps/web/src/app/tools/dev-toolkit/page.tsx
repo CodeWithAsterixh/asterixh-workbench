@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function DevToolkitPage() {
   return (
     <ToolPageShell
+      slug="dev-toolkit"
       title="Dev Toolkit"
       description="Base64, SHA-1/256/384/512 hashing, and UUID generation — three small utilities that belong in one tab, not three."
     >

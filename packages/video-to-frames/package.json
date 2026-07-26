@@ -1,7 +1,7 @@
 {
   "name": "@workbench-tools/video-to-frames",
   "version": "0.1.0",
-  "description": "Turn a video into a preloaded sequence of frame images, entirely in the browser — with one-call ZIP export and download.",
+  "description": "Turn a video into a preloaded sequence of frame images, entirely in the browser \u2014 with one-call ZIP export and download.",
   "license": "MIT",
   "type": "module",
   "sideEffects": false,

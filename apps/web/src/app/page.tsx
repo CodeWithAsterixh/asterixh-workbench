@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight, Compass } from "lucide-react";
 import {
   Reveal,
@@ -8,8 +7,8 @@ import {
   MagneticButton,
   AnimatedCounter,
 } from "@/lib/animations";
-import { ToolCard } from "@/components/ToolCard";
-import { tools } from "@/data/tools";
+import { FeaturedToolCard } from "@/components/FeaturedToolCard";
+import { featuredTools } from "@/data/tools";
 import { buildProcessFrames, heroChapters, heroFrameCount } from "@/data/process-frames";
 
 const capabilities = [
@@ -141,16 +140,30 @@ export default function HomePage() {
         <div className="container flex flex-col gap-4">
           <Reveal>
             <span className="eyebrow">The shop floor</span>
-            <h2 className="text-display-md mt-6 max-w-2xl">Fourteen tools live. More on the bench.</h2>
+            <h2 className="text-display-md mt-6 max-w-2xl">Seven tools, one from every corner of the shop</h2>
+            <p className="lead mt-6 max-w-2xl">
+              Fourteen tools live in total, grouped into seven categories — video, images, icons
+              &amp; graphics, design, documents, developer utilities, and text. Here's one from
+              each.
+            </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
-            {tools.map((tool, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+            {featuredTools.map((tool, i) => (
               <Reveal key={tool.slug} delay={i * 0.08}>
-                <ToolCard tool={tool} />
+                <FeaturedToolCard tool={tool} />
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={0.2}>
+            <div className="mt-14">
+              <MagneticButton to="/tools" variant="secondary" size="lg">
+                <Compass size={16} strokeWidth={1.75} />
+                See all fourteen, by category
+              </MagneticButton>
+            </div>
+          </Reveal>
         </div>
       </section>
 

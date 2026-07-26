@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { tools } from "@/data/tools";
+import { categories } from "@/data/categories";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -16,16 +16,15 @@ export function Footer() {
         </div>
 
         <div>
-          <span className="eyebrow">Tools</span>
-          <ul className="mt-5 flex flex-col gap-3">
-            {tools.map((tool) => (
-              <li key={tool.slug}>
+          <span className="eyebrow">Categories</span>
+          <ul className="mt-5 grid grid-cols-2 gap-3">
+            {categories.map((category) => (
+              <li key={category.id}>
                 <Link
-                  href={tool.href}
+                  href={`/tools#${category.id}`}
                   className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
                 >
-                  {tool.name} {" "}
-                  {tool.status === "in-progress" && <span className="timecode ml-2">in progress</span>}
+                  {category.label}
                 </Link>
               </li>
             ))}

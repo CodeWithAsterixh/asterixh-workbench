@@ -273,6 +273,35 @@ label {
   z-index: var(--z-cursor);
 }
 
+/* ---------- grid shapes editor ---------- */
+
+.grid-shape-editor {
+  display: inline-grid;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--border);
+  background: var(--surface-sunken);
+  touch-action: none;
+}
+
+.grid-shape-cell {
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.grid-shape-cell-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-secondary);
+}
+
 /* ---------- code ---------- */
 
 code,

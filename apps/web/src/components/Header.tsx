@@ -6,9 +6,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MagneticButton } from "@/lib/animations";
+import { NavToolsMenu } from "@/components/NavToolsMenu";
 import { liveTools } from "@/data/tools";
-
-const navLinks = [{ href: "/tools", label: "Tools" }];
+import { categories } from "@/data/categories";
+import { toolsByCategory } from "@/data/tools";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -40,16 +41,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-mono text-xs uppercase tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-              data-cursor="link"
-            >
-              {link.label}
-            </Link>
-          ))}
+          <NavToolsMenu />
           {featuredTool && (
             <MagneticButton to={featuredTool.href} variant="secondary">
               Open {featuredTool.name}
@@ -76,18 +68,32 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden overflow-hidden bg-[var(--surface)] border-b border-[var(--border)]"
+            style={{ maxHeight: "calc(100dvh - var(--header-height))", overflowY: "auto" }}
           >
-            <nav className="container py-6 flex flex-col gap-5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="font-mono text-sm uppercase tracking-widest text-[var(--text-secondary)]"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <nav className="container py-6 flex flex-col gap-8">
+              {categories.map((category) => {
+                const categoryTools = toolsByCategory(category.id);
+                if (categoryTools.length === 0) return null;
+                return (
+                  <div key={category.id}>
+                    <span className="timecode block mb-3">{category.label}</span>
+                    <ul className="flex flex-col gap-3">
+                      {categoryTools.map((tool) => (
+                        <li key={tool.slug}>
+                          <Link
+                            href={tool.href}
+                            onClick={() => setOpen(false)}
+                            className="text-sm text-[var(--text-secondary)]"
+                          >
+                            {tool.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+
               {featuredTool && (
                 <Link href={featuredTool.href} onClick={() => setOpen(false)} className="btn btn--primary w-full">
                   Open {featuredTool.name}

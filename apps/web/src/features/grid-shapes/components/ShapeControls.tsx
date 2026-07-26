@@ -19,7 +19,7 @@ function CopyButton({ getText, label }: { getText: () => string; label: string }
     setTimeout(() => setCopied(false), 1500);
   };
   return (
-    <button type="button" onClick={handleCopy} className="btn btn--secondary flex-1">
+    <button type="button" onClick={handleCopy} className="btn btn--secondary w-full">
       {copied ? <Check size={15} strokeWidth={1.75} /> : <Copy size={15} strokeWidth={1.75} />}
       {copied ? "Copied" : label}
     </button>
@@ -91,7 +91,7 @@ export function ShapeControls({ gs }: ShapeControlsProps) {
       )}
 
       <div className="card">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
           <div>
             <label htmlFor="grid-rows">Rows</label>
             <input
@@ -152,7 +152,7 @@ export function ShapeControls({ gs }: ShapeControlsProps) {
       </div>
 
       <div className="card">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="flex flex-col gap-6">
           <div>
             <label htmlFor="fill-color">Fill</label>
             <div className="flex items-center gap-2">
@@ -210,7 +210,7 @@ export function ShapeControls({ gs }: ShapeControlsProps) {
             <Download size={15} strokeWidth={1.75} />
             Download SVG
           </button>
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3">
             <CopyButton getText={() => buildSvgDocument(gs.shape, gs.fill, gs.stroke, gs.strokeWidth)} label="Copy SVG" />
             <CopyButton getText={() => buildClipPathCss(gs.shape)} label="Copy clip-path" />
           </div>

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function QrCodePage() {
   return (
     <ToolPageShell
+      slug="qr-code"
       title="QR Code Generator"
       description="Text or a link in, a downloadable QR code out — adjust error correction, size, and colors, and export as PNG or SVG."
     >

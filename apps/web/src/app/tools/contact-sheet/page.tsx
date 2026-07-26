@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function ContactSheetPage() {
   return (
     <ToolPageShell
+      slug="contact-sheet"
       title="Contact Sheet"
       description="Drop in a batch of images and get back one labeled grid — a quick storyboard or contact sheet, ready to share as a single PNG."
     >

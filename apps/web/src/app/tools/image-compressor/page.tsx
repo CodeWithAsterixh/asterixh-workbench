@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function ImageCompressorPage() {
   return (
     <ToolPageShell
+      slug="image-compressor"
       title="Image Compressor"
       description="Drop in a batch of images, pick a format and quality, and see exactly how much smaller each one gets — before you download anything."
     >

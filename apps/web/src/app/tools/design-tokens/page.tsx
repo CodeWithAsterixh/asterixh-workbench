@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function DesignTokensPage() {
   return (
     <ToolPageShell
+      slug="design-tokens"
       title="Design Token Extractor"
       description="Drop in an image and pull out its dominant colors — export as CSS custom properties, a Tailwind config snippet, or plain JSON."
     >

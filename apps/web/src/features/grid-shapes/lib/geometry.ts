@@ -1,6 +1,6 @@
 /**
  * Turns a set of filled grid cells into a smooth SVG path outline, with
- * every boundary corner \u2014 convex (outer) AND concave (inner notches) \u2014
+ * every boundary corner — convex (outer) AND concave (inner notches) —
  * rounded by a configurable radius.
  *
  * The approach, in short:
@@ -12,13 +12,13 @@
  *  3. Walking each loop, any point where the direction changes is a "real"
  *     corner; anywhere it doesn't is just a pass-through point on a
  *     straight run.
- *  4. Each corner is drawn as a quadratic B\u00e9zier curve *using the original
+ *  4. Each corner is drawn as a quadratic Bézier curve *using the original
  *     sharp corner as the control point*. That single trick is what makes
  *     both convex and concave corners round correctly with no special-casing:
  *     a quadratic curve is always pulled toward its control point, so it
  *     naturally bulges inward for an outer corner and outward (filling the
  *     notch) for an inner one.
- *  5. Radii are clamped per edge \u2014 if two neighboring corners would ask
+ *  5. Radii are clamped per edge — if two neighboring corners would ask
  *     for more radius than the edge between them is long, both are scaled
  *     down proportionally, the same way CSS border-radius resolves
  *     overlapping corners on a box.
@@ -146,7 +146,7 @@ function buildLoopPath(
   });
 
   // If two neighboring corners' radii would overlap on the edge between
-  // them, scale both down proportionally \u2014 same resolution CSS uses for
+  // them, scale both down proportionally — same resolution CSS uses for
   // border-radius overlap on a box, applied per edge instead of globally.
   const edgeScale = edgeLength.map((len, i) => {
     const r1 = rawRadius[i]!;

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function PdfToolsPage() {
   return (
     <ToolPageShell
+      slug="pdf-tools"
       title="PDF Split & Merge"
       description="Combine PDFs into one file in whatever order you choose, or break a PDF apart into individual pages. No upload — the file never leaves your browser."
     >

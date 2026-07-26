@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function RegexTesterPage() {
   return (
     <ToolPageShell
+      slug="regex-tester"
       title="Regex Tester"
       description="Write a pattern, toggle flags, and see every match highlighted live — with capture groups broken out below."
     >

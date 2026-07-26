@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function FaviconGeneratorPage() {
   return (
     <ToolPageShell
+      slug="favicon-generator"
       title="Favicon Generator"
       description="Drop in one image and get back every size you actually need — browser tab, iOS home screen, Android, PWA — plus a manifest and copy-paste HTML, all in one zip."
     >

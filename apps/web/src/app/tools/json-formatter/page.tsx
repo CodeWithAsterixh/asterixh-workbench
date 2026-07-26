@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function JsonFormatterPage() {
   return (
     <ToolPageShell
+      slug="json-formatter"
       title="JSON Formatter"
       description="Paste in JSON, format or minify it, and catch syntax errors with a line and column pointer. Nothing you paste here leaves your browser."
     >

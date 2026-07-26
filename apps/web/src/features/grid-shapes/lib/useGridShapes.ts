@@ -8,7 +8,7 @@ const DEFAULT_COLS = 14;
 const DEFAULT_RADIUS = 10;
 const DEFAULT_CELL_SIZE = 32;
 
-/** A small plus/cross \u2014 it has both convex outer corners and concave inner
+/** A small plus/cross — it has both convex outer corners and concave inner
  *  notches, so the shape it produces immediately shows off what this tool does. */
 function buildDefaultShape(rows: number, cols: number): Set<CellKey> {
   const filled = new Set<CellKey>();

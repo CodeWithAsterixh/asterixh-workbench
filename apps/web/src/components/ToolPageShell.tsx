@@ -1,21 +1,27 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/lib/animations";
+import { HowItWorksSection } from "@/components/HowItWorksSection";
+import { howItWorks } from "@/data/how-it-works";
 
 interface ToolPageShellProps {
   title: string;
   description: string;
   badge?: string;
+  /** Tool registry slug — looks up this tool's Input/Output/Steps content. */
+  slug?: string;
   children: ReactNode;
 }
 
 /**
  * Every tool page shares this shape: a dark "shell" hero (breadcrumb, title,
- * description) followed by a light "paper" workspace holding the actual
- * tool UI. See tokens-color.css for why the theme flips here specifically.
+ * description), a light "paper" workspace holding the actual tool UI, and —
+ * when a slug is given — a "How it works" section (input, output, steps)
+ * back on the dark shell. See tokens-color.css for why the theme flips here.
  */
-export function ToolPageShell({ title, description, badge = "Live", children }: ToolPageShellProps) {
+export function ToolPageShell({ title, description, badge = "Live", slug, children }: ToolPageShellProps) {
   const cleanTitle = JSON.parse(`"${title}"`);
+  const details = slug ? howItWorks[slug] : undefined;
 
   return (
     <>
@@ -40,6 +46,8 @@ export function ToolPageShell({ title, description, badge = "Live", children }: 
           <div className="container">{children}</div>
         </section>
       </div>
+
+      {details && <HowItWorksSection input={details.input} output={details.output} steps={details.steps} />}
     </>
   );
 }

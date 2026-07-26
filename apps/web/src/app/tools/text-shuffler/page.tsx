@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function TextShufflerPage() {
   return (
     <ToolPageShell
+      slug="text-shuffler"
       title="Text Shuffler"
       description="Pick a delimiter — a comma, a period, a space, anything — split your text into pieces on it, shuffle them, and rejoin with the same delimiter."
     >

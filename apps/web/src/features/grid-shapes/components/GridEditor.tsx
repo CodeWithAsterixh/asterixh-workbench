@@ -1,13 +1,12 @@
 "use client";
 
-import { useRef, type PointerEvent as ReactPointerEvent } from "react";
+import { memo, useRef, type PointerEvent as ReactPointerEvent } from "react";
 import { cellKey, type CellKey } from "../lib/geometry";
 
 interface GridEditorProps {
   rows: number;
   cols: number;
   filled: Set<CellKey>;
-  cellSize: number;
   mode: "paint" | "radius";
   selectedCell: CellKey | null;
   cellHasOverride: (key: CellKey) => boolean;
@@ -16,17 +15,54 @@ interface GridEditorProps {
   onPointerUp: () => void;
 }
 
+interface CellButtonProps {
+  cellKeyValue: CellKey;
+  isFilled: boolean;
+  isSelected: boolean;
+  hasOverride: boolean;
+  cursor: string;
+}
+
+/**
+ * Memoized so that, on a large grid, painting one cell only re-renders that
+ * one cell — not all `rows * cols` of them. Without this, every pointermove
+ * during a drag re-renders the whole grid, which is what caused the lag on
+ * bigger canvases.
+ */
+const CellButton = memo(function CellButton({ cellKeyValue, isFilled, isSelected, hasOverride, cursor }: CellButtonProps) {
+  return (
+    <div
+      data-cell-key={cellKeyValue}
+      role="gridcell"
+      aria-selected={isFilled}
+      className="grid-shape-cell"
+      style={{
+        background: isFilled ? "var(--accent)" : "transparent",
+        outline: isSelected ? "2px solid var(--accent-secondary)" : undefined,
+        outlineOffset: isSelected ? -2 : undefined,
+        cursor,
+      }}
+    >
+      {hasOverride && <span className="grid-shape-cell-dot" aria-hidden="true" />}
+    </div>
+  );
+});
+
 /**
  * Pointer handling is delegated to the container (rather than per-cell
  * onPointerEnter) and resolved via elementFromPoint on move. Per-cell
- * pointerenter doesn't fire during a touch drag on most browsers \u2014 this
+ * pointerenter doesn't fire during a touch drag on most browsers — this
  * is what makes finger-painting actually work, not just mouse-dragging.
+ *
+ * Sizing is fluid (CSS grid `1fr` tracks inside a width-capped, aspect-ratio
+ * locked container) rather than fixed pixels, so the grid always fits its
+ * container and never needs horizontal scrolling on narrow screens — which
+ * is what previously made touch drags fight with the page's own scrolling.
  */
 export function GridEditor({
   rows,
   cols,
   filled,
-  cellSize,
   mode,
   selectedCell,
   cellHasOverride,
@@ -68,56 +104,28 @@ export function GridEditor({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      className="inline-grid select-none"
+      className="grid-shape-editor select-none"
       style={{
-        gridTemplateColumns: `repeat(${cols}, ${cellSize}px)`,
-        gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
-        touchAction: "none",
-        border: "1px solid var(--border)",
-        background: "var(--surface-sunken)",
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        gridTemplateRows: `repeat(${rows}, 1fr)`,
+        aspectRatio: `${cols} / ${rows}`,
       }}
       role="grid"
-      aria-label="Shape grid \u2014 click or drag to fill cells"
+      aria-label="Shape grid — click or drag to fill cells"
     >
       {Array.from({ length: rows }, (_, r) =>
         Array.from({ length: cols }, (_, c) => {
           const key = cellKey(r, c);
           const isFilled = filled.has(key);
-          const isSelected = mode === "radius" && selectedCell === key;
-          const hasOverride = isFilled && cellHasOverride(key);
           return (
-            <div
+            <CellButton
               key={key}
-              data-cell-key={key}
-              role="gridcell"
-              aria-selected={isFilled}
-              style={{
-                width: cellSize,
-                height: cellSize,
-                boxSizing: "border-box",
-                border: "1px solid var(--border)",
-                background: isFilled ? "var(--accent)" : "transparent",
-                outline: isSelected ? "2px solid var(--accent-secondary)" : undefined,
-                outlineOffset: isSelected ? -2 : undefined,
-                position: "relative",
-                cursor: mode === "radius" && !isFilled ? "default" : "pointer",
-              }}
-            >
-              {hasOverride && (
-                <span
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    top: 2,
-                    right: 2,
-                    width: 4,
-                    height: 4,
-                    borderRadius: "50%",
-                    background: "var(--accent-secondary)",
-                  }}
-                />
-              )}
-            </div>
+              cellKeyValue={key}
+              isFilled={isFilled}
+              isSelected={mode === "radius" && selectedCell === key}
+              hasOverride={isFilled && cellHasOverride(key)}
+              cursor={mode === "radius" && !isFilled ? "default" : "pointer"}
+            />
           );
         }),
       )}

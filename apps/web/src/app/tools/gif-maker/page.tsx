@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function GifMakerPage() {
   return (
     <ToolPageShell
+      slug="gif-maker"
       title="GIF Maker"
       description="Drop in a batch of images, order them, set the delay and loop, and export an animated GIF — no upload, no server round-trip."
     >

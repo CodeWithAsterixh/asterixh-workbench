@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function SpriteSheetPackerPage() {
   return (
     <ToolPageShell
+      slug="sprite-sheet-packer"
       title="Sprite Sheet Packer"
       description="Drop in a batch of images and get back one packed sheet plus a JSON manifest with exact frame coordinates — for game dev or CSS sprite animation."
     >
