@@ -20,14 +20,6 @@ export function Footer() {
           <ul className="mt-5 grid grid-cols-1 gap-3">
             <li>
               <Link
-                href="/strategy"
-                className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-              >
-                Strategy blueprint
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/tools"
                 className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
               >
@@ -48,20 +40,20 @@ export function Footer() {
         </div>
 
         <div>
-          <span className="eyebrow">Launch rules</span>
+          <span className="eyebrow">Built for</span>
           <p className="timecode mt-5 leading-relaxed">
-            No login required
+            Fast browser workflows
             <br />
-            No ads in phase 1
+            Clear outputs
             <br />
-            Browser processing first
+            Accessible layouts
           </p>
         </div>
       </div>
 
       <div className="container pb-10 flex items-center justify-between">
         <span className="timecode">&copy; {year} Workbench</span>
-        <span className="timecode">Built for a larger tool platform</span>
+        <span className="timecode">Browser tools that stay readable</span>
       </div>
     </footer>
   );

@@ -6,8 +6,7 @@ import { tools, toolsByCategory } from "@/data/tools";
 
 export const metadata: Metadata = {
   title: "Tools - Workbench",
-  description:
-    "Browse the current Workbench tool clusters and see how the platform is organized today.",
+  description: "Browse the current Workbench tool catalog.",
 };
 
 const metrics = [
@@ -22,13 +21,10 @@ export default function ToolsPage() {
       <div className="container flex flex-col gap-6">
         <Reveal className="flex flex-col gap-5">
           <span className="eyebrow">Current bench</span>
-          <h1 className="text-display-lg mt-4 max-w-3xl">
-            The first clusters are live, and the platform keeps the same shape as it grows.
-          </h1>
+          <h1 className="text-display-lg mt-4 max-w-3xl">All live tools, grouped by category.</h1>
           <p className="lead mt-6 max-w-3xl">
-            Every tool on Workbench is a seed for a larger cluster: one problem, one page, one
-            shared architecture. The goal is to make it easy to add related tools, supporting
-            articles, and internal links without redesigning the whole site each time.
+            Browse the live catalog, jump to a category, and open any tool that fits the job you
+            need right now.
           </p>
         </Reveal>
 

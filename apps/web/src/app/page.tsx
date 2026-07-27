@@ -1,73 +1,118 @@
-import { ArrowRight, BookOpenText, Compass, Layers3, ShieldCheck, Workflow } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Compass, Sparkles, ShieldCheck, TimerReset } from "lucide-react";
 import { Reveal, AnimatedCounter, MagneticButton } from "@/lib/animations";
 import { FeaturedToolCard } from "@/components/FeaturedToolCard";
+import { categories } from "@/data/categories";
 import { featuredTools, tools } from "@/data/tools";
-import {
-  architectureLayers,
-  launchPrinciples,
-  roadmapPhases,
-} from "@/data/platform-blueprint";
 
 const metrics = [
-  { target: tools.length, suffix: "", label: "Live tools today" },
-  { target: 7, suffix: "", label: "Current categories" },
+  { target: tools.length, suffix: "", label: "Live tools" },
+  { target: categories.length, suffix: "", label: "Current categories" },
   { target: 0, suffix: "", label: "Login walls" },
   { target: 100, suffix: "%", label: "Browser-first" },
+];
+
+const pillars = [
+  {
+    icon: Sparkles,
+    title: "Fast and focused",
+    body: "Each tool solves one task well, loads quickly, and stays out of the way once the work is done.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Private by default",
+    body: "The browser does the heavy lifting whenever possible, so users can work without uploading sensitive content.",
+  },
+  {
+    icon: TimerReset,
+    title: "Reusable architecture",
+    body: "The same layout, content model, and tool shell keep every new page consistent as the catalog grows.",
+  },
 ];
 
 export default function HomePage() {
   return (
     <>
-      <section data-theme="shell" className="relative overflow-hidden pt-32 pb-24">
+      <section data-theme="shell" className="pt-32 pb-24">
         <div className="container flex flex-col gap-8">
           <Reveal>
-            <span className="eyebrow">Workbench - browser tools platform</span>
+            <span className="eyebrow">Workbench</span>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <h1 className="text-display-lg mt-4 max-w-4xl">
-              Small tools now. A larger browser platform next.
-            </h1>
-          </Reveal>
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+            <div className="flex flex-col gap-6">
+              <Reveal delay={0.05}>
+                <h1 className="text-display-lg max-w-4xl">
+                  Small browser tools, built to feel like a serious platform.
+                </h1>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="lead max-w-3xl">
+                  Workbench is a focused collection of browser-first utilities for developers,
+                  designers, creators, and everyday internet work. The emphasis is simple:
+                  quick to load, easy to use, readable on any screen, and structured so every new
+                  tool fits the same system.
+                </p>
+              </Reveal>
 
-          <Reveal delay={0.2}>
-            <p className="lead mt-6 max-w-3xl">
-              Workbench is evolving from a compact tools site into a browser-first platform
-              built around speed, privacy, accessibility, SEO, and reusable architecture.
-              Every tool should solve one problem well, stay fast on mobile, and remain easy to
-              expand into a much larger cluster.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="flex flex-wrap items-center gap-4 mt-8">
-              <MagneticButton to="/strategy" variant="primary" size="lg">
-                Read the blueprint
-                <BookOpenText size={16} strokeWidth={1.75} />
-              </MagneticButton>
-              <MagneticButton to="/tools" variant="secondary" size="lg">
-                <Compass size={16} strokeWidth={1.75} />
-                Browse the tools
-              </MagneticButton>
-              <MagneticButton to="/tools/video-to-frames" variant="secondary" size="lg">
-                Open a live tool
-                <ArrowRight size={16} strokeWidth={1.75} />
-              </MagneticButton>
+              <Reveal delay={0.2}>
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <MagneticButton to="/tools" variant="primary" size="lg">
+                    Browse all tools
+                    <Compass size={16} strokeWidth={1.75} />
+                  </MagneticButton>
+                  <MagneticButton to="/tools/video-to-frames" variant="secondary" size="lg">
+                    Open a live tool
+                    <ArrowRight size={16} strokeWidth={1.75} />
+                  </MagneticButton>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="card">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <span className="eyebrow">Built for speed</span>
+                    <h2 className="mt-4 text-display-sm" style={{ fontSize: "1.75rem" }}>
+                      Browser work, without the clutter.
+                    </h2>
+                  </div>
+                  <Sparkles size={18} className="text-[var(--accent)]" />
+                </div>
+                <div className="mt-6 grid gap-3">
+                  {[
+                    "Tools that solve one problem well",
+                    "Content that explains the workflow clearly",
+                    "Layouts that stay readable on light and dark surfaces",
+                    "Architecture that can grow without redesigns",
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-[var(--radius-sharp)] border border-[var(--border)] bg-[var(--surface-sunken)] px-4 py-3 text-sm text-[var(--text-primary)]"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       <section data-theme="shell" className="section border-y border-[var(--border)]">
-        <div className="container grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="container grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {metrics.map((metric) => (
             <Reveal key={metric.label}>
-              <AnimatedCounter
-                target={metric.target}
-                suffix={metric.suffix}
-                className="text-display-md font-mono"
-              />
-              <p className="text-secondary text-sm mt-2">{metric.label}</p>
+              <div className="card">
+                <AnimatedCounter
+                  target={metric.target}
+                  suffix={metric.suffix}
+                  className="text-display-md font-mono"
+                />
+                <p className="text-secondary text-sm mt-2">{metric.label}</p>
+              </div>
             </Reveal>
           ))}
         </div>
@@ -76,29 +121,21 @@ export default function HomePage() {
       <section data-theme="shell" className="section">
         <div className="container">
           <Reveal className="flex flex-col gap-5">
-            <span className="eyebrow">Launch principles</span>
+            <span className="eyebrow">Live tools</span>
             <h2 className="text-display-md mt-4 max-w-2xl">
-              The platform is designed around trust before monetization.
+              The current bench is the starting point for the larger catalog.
             </h2>
             <p className="lead max-w-2xl">
-              Phase 1 is about audience growth: no login walls, no ads, no limits, and no
-              compromise on performance. The codebase should make later monetization possible,
-              but invisible until the product has earned it.
+              These live tools already cover developer workflows, images, PDFs, text, and
+              visual utilities. The shared structure makes it easy to add the next set without
+              rebuilding the site each time.
             </p>
           </Reveal>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mt-14">
-            {launchPrinciples.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <div className="card h-full">
-                  <div className="flex items-center gap-3">
-                    <ShieldCheck size={18} className="text-[var(--accent)]" />
-                    <h3 className="text-display-sm" style={{ fontSize: "1.5rem" }}>
-                      {item.title}
-                    </h3>
-                  </div>
-                  <p className="text-secondary mt-4 text-sm leading-relaxed">{item.body}</p>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+            {featuredTools.map((tool, i) => (
+              <Reveal key={tool.slug} delay={i * 0.06}>
+                <FeaturedToolCard tool={tool} />
               </Reveal>
             ))}
           </div>
@@ -108,31 +145,27 @@ export default function HomePage() {
       <section data-theme="shell" className="section" style={{ background: "var(--surface-raised)" }}>
         <div className="container">
           <Reveal className="flex flex-col gap-5">
-            <span className="eyebrow">Platform architecture</span>
+            <span className="eyebrow">Why it works</span>
             <h2 className="text-display-md mt-4 max-w-2xl">
-              Reusable systems keep the site fast as it grows.
+              The site stays readable because every tool uses the same shell.
             </h2>
-            <p className="lead max-w-2xl">
-              The blueprint calls for a worker-first processing model, a shared tool manifest,
-              structured content generation, and SEO that is designed into every page from day
-              one.
-            </p>
           </Reveal>
 
-          <div className="grid gap-6 lg:grid-cols-2 mt-14">
-            {architectureLayers.map((item, index) => (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <div className="card h-full">
-                  <div className="flex items-center gap-3">
-                    <Layers3 size={18} className="text-[var(--accent)]" />
-                    <h3 className="text-display-sm" style={{ fontSize: "1.5rem" }}>
-                      {item.title}
+          <div className="grid gap-6 md:grid-cols-3 mt-12">
+            {pillars.map((pillar, index) => {
+              const Icon = pillar.icon;
+              return (
+                <Reveal key={pillar.title} delay={index * 0.05}>
+                  <div className="card h-full">
+                    <Icon size={18} className="text-[var(--accent)]" />
+                    <h3 className="mt-5 text-display-sm" style={{ fontSize: "1.5rem" }}>
+                      {pillar.title}
                     </h3>
+                    <p className="text-secondary mt-4 text-sm leading-relaxed">{pillar.body}</p>
                   </div>
-                  <p className="text-secondary mt-4 text-sm leading-relaxed">{item.body}</p>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -140,65 +173,27 @@ export default function HomePage() {
       <section data-theme="shell" className="section">
         <div className="container">
           <Reveal className="flex flex-col gap-5">
-            <span className="eyebrow">Current bench</span>
+            <span className="eyebrow">Browse by category</span>
             <h2 className="text-display-md mt-4 max-w-2xl">
-              The live tools are the first cluster of the larger system.
-            </h2>
-            <p className="lead max-w-2xl">
-              The site already has a strong seed set. The strategy is to grow from here by
-              adding more linked tools, support content, and category depth instead of isolated
-              pages.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-14">
-            {featuredTools.map((tool, i) => (
-              <Reveal key={tool.slug} delay={i * 0.08}>
-                <FeaturedToolCard tool={tool} />
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={0.2}>
-            <div className="mt-12">
-              <MagneticButton to="/tools" variant="secondary" size="lg">
-                <Compass size={16} strokeWidth={1.75} />
-                See every live tool
-              </MagneticButton>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section data-theme="shell" className="section" style={{ background: "var(--surface-raised)" }}>
-        <div className="container">
-          <Reveal className="flex flex-col gap-5">
-            <span className="eyebrow">Roadmap</span>
-            <h2 className="text-display-md mt-4 max-w-2xl">
-              Build the audience first, then scale the platform and monetization hooks.
+              Every category is an entry point into a larger cluster.
             </h2>
           </Reveal>
 
-          <div className="grid gap-6 lg:grid-cols-3 mt-14">
-            {roadmapPhases.map((phase, index) => (
-              <Reveal key={phase.name} delay={index * 0.05}>
-                <div className="card h-full">
-                  <div className="flex items-center gap-3">
-                    <Workflow size={18} className="text-[var(--accent)]" />
-                    <h3 className="text-display-sm" style={{ fontSize: "1.35rem" }}>
-                      {phase.name}
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mt-12">
+            {categories.map((category) => (
+              <Reveal key={category.id}>
+                <Link
+                  href={`/tools#${category.id}`}
+                  className="card block h-full transition-colors hover:border-[var(--accent)]"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-display-sm" style={{ fontSize: "1.45rem" }}>
+                      {category.label}
                     </h3>
+                    <span className="timecode">Tools</span>
                   </div>
-                  <p className="text-secondary mt-4 text-sm leading-relaxed">{phase.summary}</p>
-                  <ul className="mt-5 space-y-3 text-sm text-[var(--text-secondary)]">
-                    {phase.points.map((point) => (
-                      <li key={point} className="flex gap-3">
-                        <span className="text-[var(--accent)] mt-1">•</span>
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  <p className="text-secondary mt-4 text-sm leading-relaxed">{category.description}</p>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -210,18 +205,13 @@ export default function HomePage() {
           <div>
             <span className="eyebrow">Next step</span>
             <h2 className="text-display-sm mt-5 max-w-xl">
-              Use the blueprint to steer the project, then keep shipping the tools.
+              Jump into a tool and keep the work moving.
             </h2>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <MagneticButton to="/strategy" variant="primary" size="lg">
-              Read the blueprint
-              <ArrowRight size={16} strokeWidth={1.75} />
-            </MagneticButton>
-            <MagneticButton to="/tools" variant="secondary" size="lg">
-              Browse tools
-            </MagneticButton>
-          </div>
+          <MagneticButton to="/tools" variant="primary" size="lg">
+            Browse all tools
+            <ArrowRight size={16} strokeWidth={1.75} />
+          </MagneticButton>
         </div>
       </section>
     </>

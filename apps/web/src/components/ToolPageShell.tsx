@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Reveal } from "@/lib/animations";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { howItWorks } from "@/data/how-it-works";
+import { getTool } from "@/data/tools";
 
 interface ToolPageShellProps {
   title: string;
@@ -22,6 +23,7 @@ interface ToolPageShellProps {
 export function ToolPageShell({ title, description, badge = "Live", slug, children }: ToolPageShellProps) {
   const cleanTitle = JSON.parse(`"${title}"`);
   const details = slug ? howItWorks[slug] : undefined;
+  const tool = slug ? getTool(slug) : undefined;
 
   return (
     <>
@@ -42,12 +44,16 @@ export function ToolPageShell({ title, description, badge = "Live", slug, childr
       </section>
 
       <div data-theme="paper">
-        <section className="section--tight" style={{ background: "var(--surface)" }}>
-          <div className="container">{children}</div>
+        <section className="section--tight" style={{ background: "var(--surface)", color: "var(--text-primary)" }}>
+          <div className="container">
+            <div className="text-[var(--text-primary)]">{children}</div>
+          </div>
         </section>
       </div>
 
-      {details && <HowItWorksSection input={details.input} output={details.output} steps={details.steps} />}
+      {details && tool && (
+        <HowItWorksSection tool={tool} input={details.input} output={details.output} steps={details.steps} />
+      )}
     </>
   );
 }

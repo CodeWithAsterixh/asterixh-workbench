@@ -1,9 +1,9 @@
 # Workbench
 
 A browser-first tools platform for developers, designers, creators, and
-everyday internet users. The current site has twenty-two live tools, and the
-long-term plan is to grow into a much larger cluster of linked utilities,
-supporting articles, and reusable browser-processing architecture.
+everyday internet users. The current site has seventy-four live tools and is
+structured so new utilities, supporting articles, and reusable browser
+workflows can be added without rebuilding the whole site.
 
 | Tool | What it does |
 | --- | --- |
@@ -23,22 +23,13 @@ supporting articles, and reusable browser-processing architecture.
 | Text Shuffler | Split text on any delimiter, shuffle, rejoin |
 
 See `/tools` for the current live catalog, which now also includes dedicated
-utilities for Base64, timestamps, percentages, color contrast, dates, slugs,
-and word counting.
+utilities for Base64, URL and HTML encoding, timestamps, percentages, loan
+and age calculations, color contrast, CSS generators, dates, slugs, and word
+counting.
 
 This is a fresh project \u2014 the only things carried over from the old
 prototype were the scroll/animation primitives and the video-to-frames
 extraction logic, both rebuilt into the structure below.
-
-## Strategy blueprint
-
-The product strategy from the attached blueprint now lives in the app as a
-dedicated page:
-
-- `/strategy` - the platform vision, launch principles, category clusters,
-  architecture layers, and phased roadmap.
-- `src/data/platform-blueprint.ts` - the shared content model used by the
-  homepage and strategy page.
 
 ## Structure
 
@@ -92,9 +83,6 @@ pnpm lint              # eslint for apps/web
   vocabulary (`--surface`, `--text-primary`, `--accent`, …): a dark "shell"
   for marketing/discovery pages, and a light "paper" workspace scoped to a
   tool's own page. See `apps/web/src/app/tokens-*.css`.
-- **Platform pages** — the homepage now presents Workbench as a scalable
-  browser tools platform, while `/strategy` captures the roadmap, growth
-  phases, and architecture goals from the blueprint.
 - **Motion** — `src/lib/animations` holds the reusable primitives: `Reveal`
   (scroll-triggered fade/slide), `Parallax`/`useParallax`, `StickyScroll` /
   `StickyCard` (pinned-while-scrolled layouts), `ZoomScroll`, `ScrollFrameStory`
@@ -102,13 +90,13 @@ pnpm lint              # eslint for apps/web
   copy off one scroll value), `SpinViewer` (drag-to-rotate frame viewer),
   `ScrollProgressBar`, `SplitHeading`, `CursorFollower`, `AnimatedCounter`,
   and `MagneticButton`/`useMagnetic`.
-- **Categories** — `src/data/categories.ts` defines seven categories
+- **Categories** — `src/data/categories.ts` defines eight categories
   (Video & Animation, Image Tools, Icons & Graphics, Design, Documents,
-  Developer Utilities, Text). Every tool in `src/data/tools.ts` has a
-  `category`, and some are flagged `featured: true` — one per category —
-  which is what the homepage showcases. Categories drive the navbar
-  dropdown (`NavToolsMenu`), the footer's category links, and the
-  `/tools` page's grouped sections (each with a `#category-id` anchor).
+  Developer Utilities, Calculators, Text). Every tool in `src/data/tools.ts`
+  has a `category`, and some are flagged `featured: true` — one per category
+  — which is what the homepage showcases. Categories drive the navbar
+  dropdown (`NavToolsMenu`), the footer's category links, and the `/tools`
+  page's grouped sections (each with a `#category-id` anchor).
 - **How It Works** — `src/data/how-it-works.ts` holds an input/output
   summary and a numbered walkthrough for every tool. `ToolPageShell` takes
   a `slug` prop and renders it automatically below the tool itself.
