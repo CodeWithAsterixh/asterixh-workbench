@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Reveal } from "@/lib/animations";
 import { GridShapeBackdrop } from "@/components/tool-ui/GridShapeBackdrop";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
-import { howItWorks } from "@/data/how-it-works";
+import { getHowItWorks } from "@/data/how-it-works";
 import { getTool } from "@/data/tools";
 
 interface ToolPageShellProps {
@@ -23,8 +23,8 @@ interface ToolPageShellProps {
  */
 export function ToolPageShell({ title, description, badge = "Live", slug, children }: ToolPageShellProps) {
   const cleanTitle = JSON.parse(`"${title}"`);
-  const details = slug ? howItWorks[slug] : undefined;
   const tool = slug ? getTool(slug) : undefined;
+  const details = tool ? getHowItWorks(tool) : undefined;
 
   return (
     <>

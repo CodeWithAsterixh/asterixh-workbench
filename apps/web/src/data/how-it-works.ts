@@ -1,5 +1,7 @@
 import { generatorToolSpecs } from "@/features/code-generators";
 import { buildGeneratorHowItWorks } from "@/features/code-generators/lib/common";
+import { getCategory } from "@/data/categories";
+import { type ToolSpec } from "@/data/tools";
 
 export interface HowItWorksStep {
   title: string;
@@ -12,7 +14,7 @@ export interface HowItWorks {
   steps: HowItWorksStep[];
 }
 
-export const howItWorks: Record<string, HowItWorks> = {
+export const howItWorksBySlug: Record<string, HowItWorks> = {
   "video-to-frames": {
     input: "A video file (MP4, WebM, MOV \u2014 anything your browser can decode), a frame count, an optional trim range, and an output format.",
     output: "A grid of preloaded frame images, plus one .zip once you compile it \u2014 file count and exact size shown before the download starts.",
@@ -755,3 +757,67 @@ export const howItWorks: Record<string, HowItWorks> = {
   },
   ...Object.fromEntries(generatorToolSpecs.map((spec) => [spec.slug, buildGeneratorHowItWorks(spec)])),
 };
+
+function buildFallbackHowItWorks(tool: ToolSpec): HowItWorks {
+  const category = getCategory(tool.category);
+  const noun = tool.name.replace(/\s*[→-]\s*/g, " ");
+
+  const input = (() => {
+    switch (tool.category) {
+      case "images":
+        return `One or more image files and the ${noun.toLowerCase()} settings you want to apply.`;
+      case "documents":
+        return `A PDF file and the output settings needed for ${noun.toLowerCase()}.`;
+      case "video":
+        return `A local video clip and the trim, crop, resize, or export settings for ${noun.toLowerCase()}.`;
+      case "audio":
+        return `An audio file and the editing settings needed for ${noun.toLowerCase()}.`;
+      case "css":
+      case "tailwind-css":
+        return `A design direction and the values you want to tune for ${noun.toLowerCase()}.`;
+      case "nextjs":
+        return `A project shape, route name, or page goal for ${noun.toLowerCase()}.`;
+      case "design":
+        return `A visual input and the shape or palette adjustments needed for ${noun.toLowerCase()}.`;
+      default:
+        return `A piece of input data and the settings required for ${noun.toLowerCase()}.`;
+    }
+  })();
+
+  const output = (() => {
+    switch (tool.category) {
+      case "images":
+        return `A cleaned-up image export or archive that is ready to use in design, content, or documentation.`;
+      case "documents":
+        return `A rebuilt PDF or extracted document output that is ready to download locally.`;
+      case "video":
+        return `A processed video export that keeps the workflow browser-native and fast.`;
+      case "audio":
+        return `A processed audio export that is ready to preview, share, or download.`;
+      case "css":
+      case "tailwind-css":
+        return `A copy-paste CSS snippet plus a live preview for ${noun.toLowerCase()}.`;
+      case "nextjs":
+        return `A ready-to-paste Next.js scaffold for ${noun.toLowerCase()}.`;
+      case "design":
+        return `A refined design result with export-ready output and clear presentation.`;
+      default:
+        return `A ready-to-use result for ${noun.toLowerCase()}.`;
+    }
+  })();
+
+  return {
+    input,
+    output,
+    steps: [
+      { title: `Open ${noun}`, body: `Start with the source material or starting values the tool was built for.` },
+      { title: "Tune the controls", body: `Adjust the settings that matter most for the ${category.label.toLowerCase()} workflow.` },
+      { title: "Review the result", body: "Check the live preview or generated output before you export anything." },
+      { title: "Copy or download", body: "Save the final result in the format you need, locally and without extra friction." },
+    ],
+  };
+}
+
+export function getHowItWorks(tool: ToolSpec): HowItWorks {
+  return howItWorksBySlug[tool.slug] ?? buildFallbackHowItWorks(tool);
+}

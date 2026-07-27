@@ -2,11 +2,11 @@ import Link from "next/link";
 import { ArrowDownToLine, ArrowUpFromLine } from "lucide-react";
 import type { ToolSpec } from "@/data/tools";
 import { getCategory } from "@/data/categories";
-import { howItWorks } from "@/data/how-it-works";
+import { getHowItWorks } from "@/data/how-it-works";
 
 export function FeaturedToolCard({ tool }: { tool: ToolSpec }) {
   const category = getCategory(tool.category);
-  const details = howItWorks[tool.slug];
+  const details = getHowItWorks(tool);
 
   return (
     <Link

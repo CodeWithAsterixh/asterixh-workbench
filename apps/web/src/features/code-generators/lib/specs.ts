@@ -3,6 +3,7 @@ import {
   colorField,
   numberField,
   selectField,
+  textareaField,
   textField,
   toggleField,
   toTitleCase,

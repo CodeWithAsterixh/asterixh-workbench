@@ -78,6 +78,9 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "video-cropper": makeMediaView("video", "crop", "Video Cropper", "Crop a video frame to a tighter area."),
     "video-resizer": makeMediaView("video", "resize", "Video Resizer", "Resize a video to a new output size locally."),
     "video-reverser": makeMediaView("video", "reverse", "Video Reverser", "Reverse playback into a new browser-rendered clip."),
+    "video-reencoder": makeMediaView("video", "convert", "Video Reencoder", "Re-record a local clip into a new format."),
+    "video-clip-cutter": makeMediaView("video", "trim", "Video Clip Cutter", "Trim a clip down to the section you need."),
+    "video-dimension-changer": makeMediaView("video", "resize", "Video Dimension Changer", "Resize a clip to a new output frame."),
   },
   audio: {
     "audio-extractor": makeMediaView("video", "audio-extract", "Audio Extractor", "Pull the audio track out of a video file."),
@@ -88,6 +91,9 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "noise-reduction": makeMediaView("audio", "noise-reduction", "Noise Reduction", "Apply a lightweight cleanup pass for spoken audio."),
     "audio-joiner": makeMediaView("audio", "join", "Audio Joiner", "Combine multiple clips into one track."),
     "audio-splitter": makeMediaView("audio", "split", "Audio Splitter", "Break a track into evenly sized chunks."),
+    "audio-loudness-booster": makeMediaView("audio", "boost", "Audio Loudness Booster", "Raise or lower gain with a single browser-side pass."),
+    "audio-cleanup-pass": makeMediaView("audio", "noise-reduction", "Audio Cleanup Pass", "Smooth rough edges from spoken audio."),
+    "audio-track-joiner": makeMediaView("audio", "join", "Audio Track Joiner", "Combine multiple clips into one file."),
   },
   images: {
     "image-compressor": ImageCompressorTool,
@@ -104,6 +110,14 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "image-splitter": makeImageView("split", "Image Splitter", "Split a source image into a grid of tiles for exports or layouts.", true),
     "image-merger": makeImageView("merge", "Image Merger", "Place several images into one fast stitched strip.", true),
     "image-collage": makeImageView("collage", "Image Collage", "Build a tidy image collage grid with browser canvas rendering.", true),
+    "image-upscaler": makeImageView("resize", "Image Upscaler", "Scale an image up or down with a browser canvas pass.", true),
+    "image-thumbnail-generator": makeImageView("crop", "Image Thumbnail Generator", "Crop a source image into a compact thumbnail for cards and galleries.", true),
+    "image-smoother": makeImageView("blur", "Image Smoother", "Blur images locally for a soft-focus result.", true),
+    "image-edge-enhancer": makeImageView("sharpen", "Image Edge Enhancer", "Restore edge detail with a lightweight sharpen pass.", true),
+    "image-format-switcher": makeImageView("convert", "Image Format Switcher", "Convert images between PNG, JPEG, and WebP locally.", true),
+    "alpha-cutout": makeImageView("background-removal", "Alpha Cutout", "Remove a flat background and keep the subject.", true),
+    "image-tile-splitter": makeImageView("split", "Image Tile Splitter", "Break an image into a grid of tiles for layout or export.", true),
+    "image-board-builder": makeImageView("collage", "Image Board Builder", "Arrange multiple images into a polished collage board.", true),
   },
   "icons-graphics": {
     "favicon-generator": FaviconGeneratorTool,
@@ -130,6 +144,10 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "keyframe-generator": makeCssView("keyframe", "Keyframe Generator", "Generate the keyframes that power a motion preset."),
     "transform-generator": makeCssView("transform", "Transform Generator", "Compose translate, scale, rotate, and skew values."),
     "filter-generator": makeCssView("filter", "Filter Generator", "Tune a live CSS filter stack for previews and UI art."),
+    "panel-glass-generator": makeCssView("glassmorphism", "Panel Glass Generator", "Shape a frosted glass card for UI surfaces."),
+    "card-shadow-generator": makeCssView("neumorphism", "Card Shadow Generator", "Create a soft surface with layered depth."),
+    "hero-gradient-generator": makeCssView("gradient", "Hero Gradient Generator", "Compose a landing-page gradient background."),
+    "dashboard-grid-generator": makeCssView("grid", "Dashboard Grid Generator", "Lay out a tidy app grid with spacing controls."),
   },
   "tailwind-css": Object.fromEntries(
     generatorToolSpecs
@@ -152,6 +170,11 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "pdf-to-images": makePdfView("pdf-to-images", "PDF to Images", "Render each PDF page to downloadable images."),
     "images-to-pdf": makePdfView("images-to-pdf", "Images to PDF", "Turn a batch of images into a single PDF."),
     "pdf-ocr": makePdfView("ocr", "PDF OCR", "Run OCR on pages and export the recognized text."),
+    "pdf-page-exporter": makePdfView("pdf-to-images", "PDF Page Exporter", "Render pages out of a PDF locally and bundle them for download."),
+    "pdf-image-builder": makePdfView("images-to-pdf", "PDF Image Builder", "Combine a set of images into one clean PDF export."),
+    "pdf-page-optimizer": makePdfView("compress", "PDF Page Optimizer", "Rebuild a lighter PDF for sharing."),
+    "pdf-page-reorderer": makePdfView("reorder", "PDF Page Reorderer", "Move pages into a new order and export the rebuilt document."),
+    "pdf-text-reader": makePdfView("ocr", "PDF Text Reader", "Extract text from page images locally and export the transcript."),
   },
   developer: {
     "json-formatter": JsonFormatterTool,
