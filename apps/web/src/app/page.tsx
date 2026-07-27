@@ -4,6 +4,7 @@ import { Reveal, AnimatedCounter, MagneticButton } from "@/lib/animations";
 import { FeaturedToolCard } from "@/components/FeaturedToolCard";
 import { categories } from "@/data/categories";
 import { featuredTools, tools } from "@/data/tools";
+import { HomepageHero } from "@/components/HomepageHero";
 
 const metrics = [
   { target: tools.length, suffix: "", label: "Live tools" },
@@ -33,73 +34,7 @@ const pillars = [
 export default function HomePage() {
   return (
     <>
-      <section data-theme="shell" className="pt-32 pb-24">
-        <div className="container flex flex-col gap-8">
-          <Reveal>
-            <span className="eyebrow">Workbench</span>
-          </Reveal>
-
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className="flex flex-col gap-6">
-              <Reveal delay={0.05}>
-                <h1 className="text-display-lg max-w-4xl">
-                  Small browser tools, built to feel like a serious platform.
-                </h1>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <p className="lead max-w-3xl">
-                  Workbench is a focused collection of browser-first utilities for developers,
-                  designers, creators, and everyday internet work. The emphasis is simple:
-                  quick to load, easy to use, readable on any screen, and structured so every new
-                  tool fits the same system.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.2}>
-                <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <MagneticButton to="/tools" variant="primary" size="lg">
-                    Browse all tools
-                    <Compass size={16} strokeWidth={1.75} />
-                  </MagneticButton>
-                  <MagneticButton to="/tools/video-to-frames" variant="secondary" size="lg">
-                    Open a live tool
-                    <ArrowRight size={16} strokeWidth={1.75} />
-                  </MagneticButton>
-                </div>
-              </Reveal>
-            </div>
-
-            <Reveal delay={0.2}>
-              <div className="card">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <span className="eyebrow">Built for speed</span>
-                    <h2 className="mt-4 text-display-sm" style={{ fontSize: "1.75rem" }}>
-                      Browser work, without the clutter.
-                    </h2>
-                  </div>
-                  <Sparkles size={18} className="text-[var(--accent)]" />
-                </div>
-                <div className="mt-6 grid gap-3">
-                  {[
-                    "Tools that solve one problem well",
-                    "Content that explains the workflow clearly",
-                    "Layouts that stay readable on light and dark surfaces",
-                    "Architecture that can grow without redesigns",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[var(--radius-sharp)] border border-[var(--border)] bg-[var(--surface-sunken)] px-4 py-3 text-sm text-[var(--text-primary)]"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <HomepageHero />
 
       <section data-theme="shell" className="section border-y border-[var(--border)]">
         <div className="container grid gap-6 sm:grid-cols-2 xl:grid-cols-4">

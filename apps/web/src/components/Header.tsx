@@ -27,10 +27,10 @@ export function Header() {
     <header
       data-theme="shell"
       className={cn(
-        "site-header fixed top-0 left-0 right-0 transition-colors duration-300",
+        "site-header fixed transition-colors duration-300",
         scrolled
-          ? "bg-[var(--surface)]/90 backdrop-blur border-b border-[var(--border)]"
-          : "bg-transparent border-b border-transparent",
+          ? "bg-[var(--surface)]/90 backdrop-blur top-0 border-b left-0 right-0  border-[var(--border)]"
+          : "bg-transparent border-b backdrop-blur-xs w-[90vw] top-2 left-1/2 -translate-x-1/2 border-transparent",
       )}
       style={{ height: "var(--header-height)" }}
     >
