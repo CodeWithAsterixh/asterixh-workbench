@@ -62,6 +62,59 @@ const twConfigFields = [
   toggleField("typography", "Include typography plugin", true),
 ];
 
+const twSurfaceFields = [
+  textField("title", "Title", "Build faster"),
+  textareaField("body", "Body", "A short supporting line that explains the surface."),
+  textField("label", "Action label", "Continue"),
+  colorField("accent", "Accent", "#b37d28"),
+  numberField("radius", "Radius", 24, 0, 64, 1),
+];
+
+const twLabelFields = [
+  textField("label", "Label", "New"),
+  colorField("accent", "Accent", "#b37d28"),
+  numberField("radius", "Radius", 999, 0, 999, 1),
+];
+
+const nextPageFields = [
+  textField("pageName", "Page name", "Pricing"),
+  textField("headline", "Headline", "Simple, clear plans for every team."),
+  textareaField("description", "Description", "Describe the page with one focused sentence and one supporting line."),
+  textField("cta", "Call to action", "Get started"),
+  toggleField("withSeo", "Include SEO metadata", true),
+  toggleField("withSidebar", "Include sidebar", false),
+];
+
+const nextContentFields = [
+  textField("pageName", "Page name", "Blog"),
+  textField("headline", "Headline", "Publish pages with structure."),
+  textareaField("description", "Description", "Add context for the route, section, or article."),
+  textField("cta", "Call to action", "Read more"),
+  toggleField("withSeo", "Include SEO metadata", true),
+  toggleField("withLoading", "Include loading state", true),
+];
+
+const nextAuthFields = [
+  textField("pageName", "Page name", "Login"),
+  textField("headline", "Headline", "Welcome back."),
+  textareaField("description", "Description", "Prompt the user to sign in with a clear supportive note."),
+  textField("cta", "Call to action", "Sign in"),
+  toggleField("withRemember", "Include remember me", true),
+  toggleField("withOtp", "Include OTP link", false),
+];
+
+const nextRoutePlusFields = [
+  textField("routePath", "Route path", "/api/health"),
+  textField("resource", "Resource", "status"),
+  selectField("method", "Method", "GET", [
+    { label: "GET", value: "GET" },
+    { label: "POST", value: "POST" },
+    { label: "PUT", value: "PUT" },
+    { label: "DELETE", value: "DELETE" },
+  ]),
+  toggleField("withJson", "Return JSON response", true),
+];
+
 const twSpacingFields = [
   selectField("property", "Property", "padding", [
     { label: "Padding", value: "padding" },
@@ -382,6 +435,98 @@ export default {
     ${bool(values, "typography") ? 'require("@tailwindcss/typography"),' : ""}
   ],
 } satisfies Config;`;
+}
+
+function makeTailwindPanelOutput(values: GeneratorValues, kind: string): string {
+  return `<section className="rounded-[${num(values, "radius", 24)}px] border border-white/10 bg-white/80 p-6 shadow-sm">
+  <p className="text-xs uppercase tracking-[0.3em]" style={{ color: "${str(values, "accent")}" }}>${kind}</p>
+  <h3 className="mt-3 text-lg font-semibold text-slate-900">${str(values, "title")}</h3>
+  <p className="mt-2 text-sm text-slate-600">${str(values, "body")}</p>
+  <button className="mt-5 rounded-full px-4 py-2 text-sm font-medium text-white" style={{ background: "${str(values, "accent")}" }}>
+    ${str(values, "label")}
+  </button>
+</section>`;
+}
+
+function makeTailwindPillOutput(values: GeneratorValues, kind: string): string {
+  return `<span className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-white shadow-sm" style={{ background: "${str(values, "accent")}", borderRadius: "${num(values, "radius", 999)}px" }}>
+  ${kind}: ${str(values, "label")}
+</span>`;
+}
+
+function makeNextMarketingPageOutput(values: GeneratorValues, componentName: string): string {
+  const metadata = bool(values, "withSeo")
+    ? `export const metadata = {
+  title: "${str(values, "pageName")}",
+  description: "${str(values, "description")}",
+};\n\n`
+    : "";
+  const sidebar = bool(values, "withSidebar")
+    ? `<aside className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Sidebar</p>
+        <p className="mt-3 text-sm text-slate-600">Use this area for quick links, stats, or supporting content.</p>
+      </aside>`
+    : "";
+
+  return `${metadata}export default function ${componentName}() {
+  return (
+    <main className="mx-auto grid min-h-screen max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)]">
+      <section className="space-y-6">
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">${str(values, "pageName")}</p>
+        <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-slate-950">${str(values, "headline")}</h1>
+        <p className="max-w-2xl text-lg leading-8 text-slate-600">${str(values, "description")}</p>
+        <div className="flex flex-wrap gap-3">
+          <button className="rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">${str(values, "cta")}</button>
+          <button className="rounded-full border border-slate-300 px-5 py-3 text-sm font-medium text-slate-700">Secondary action</button>
+        </div>
+      </section>
+      ${sidebar || `<div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
+        <div className="h-48 rounded-2xl bg-gradient-to-br from-amber-200 to-amber-50" />
+      </div>`}
+    </main>
+  );
+}`;
+}
+
+function makeNextAuthPageOutput(values: GeneratorValues, componentName: string): string {
+  const remember = bool(values, "withRemember")
+    ? `<label className="flex items-center gap-3 text-sm text-slate-600">
+          <input type="checkbox" className="h-4 w-4 rounded border-slate-300" />
+          Remember me
+        </label>`
+    : "";
+  const otp = bool(values, "withOtp") ? `<a href="#" className="text-sm font-medium text-slate-700 underline underline-offset-4">Use a one-time code</a>` : "";
+
+  return `export default function ${componentName}() {
+  return (
+    <main className="mx-auto grid min-h-screen max-w-6xl place-items-center px-6 py-16">
+      <section className="w-full max-w-md rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">${str(values, "pageName")}</p>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950">${str(values, "headline")}</h1>
+        <p className="mt-3 text-sm leading-7 text-slate-600">${str(values, "description")}</p>
+        <form className="mt-8 space-y-4">
+          <input className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" placeholder="Email address" />
+          <input className="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" placeholder="Password" type="password" />
+          <div className="flex items-center justify-between gap-3">
+            ${remember || `<span />`}
+            ${otp || `<span />`}
+          </div>
+          <button className="w-full rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white">${str(values, "cta")}</button>
+        </form>
+      </section>
+    </main>
+  );
+}`;
+}
+
+function makeNextRouteHandlerOutput(values: GeneratorValues, resource: string): string {
+  return `export async function ${str(values, "method")}() {
+  return Response.json({
+    route: "${str(values, "routePath")}",
+    resource: "${resource}",
+    ok: true,
+  });
+}`;
 }
 
 function makeThemeOutput(values: GeneratorValues): string {
@@ -873,7 +1018,587 @@ export default function App({ Component, pageProps }: AppProps) {
   },
 ];
 
-export const generatorToolSpecs = [...tailwindGeneratorSpecs, ...nextGeneratorSpecs];
+const extraTailwindGeneratorSpecs: GeneratorSpec[] = [
+  {
+    slug: "badge-generator",
+    name: "Badge Generator",
+    tagline: "Generate a compact badge with a polished look.",
+    description: "Create a small status badge snippet with a color, label, and rounded shape.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "badge"],
+    fileName: "badge.tsx",
+    outputLabel: "Badge",
+    previewKind: "component",
+    fields: twLabelFields,
+    buildOutput: (values) => makeTailwindPillOutput(values, "Badge"),
+  },
+  {
+    slug: "chip-generator",
+    name: "Chip Generator",
+    tagline: "Build a chip that feels ready to drop into UI patterns.",
+    description: "Generate a compact chip for filters, labels, or metadata.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "chip"],
+    fileName: "chip.tsx",
+    outputLabel: "Chip",
+    previewKind: "component",
+    fields: twLabelFields,
+    buildOutput: (values) => makeTailwindPillOutput(values, "Chip"),
+  },
+  {
+    slug: "pill-button-generator",
+    name: "Pill Button Generator",
+    tagline: "Create a rounded button with a clean call to action.",
+    description: "Generate a pill-shaped button component with brand color and radius controls.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "button"],
+    fileName: "pill-button.tsx",
+    outputLabel: "Button",
+    previewKind: "component",
+    fields: twLabelFields,
+    buildOutput: (values) => makeTailwindPillOutput(values, "Button"),
+    featured: true,
+  },
+  {
+    slug: "empty-state-generator",
+    name: "Empty State Generator",
+    tagline: "Design an empty state that still feels useful.",
+    description: "Generate an empty state card with supporting copy and a clear next action.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "empty-state"],
+    fileName: "empty-state.tsx",
+    outputLabel: "Empty state",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Empty State"),
+  },
+  {
+    slug: "alert-banner-generator",
+    name: "Alert Banner Generator",
+    tagline: "Create a banner for notices, warnings, or updates.",
+    description: "Generate a slim banner component with a message and action.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "banner"],
+    fileName: "alert-banner.tsx",
+    outputLabel: "Banner",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Alert Banner"),
+  },
+  {
+    slug: "feature-card-generator",
+    name: "Feature Card Generator",
+    tagline: "Turn a short feature into a presentable card.",
+    description: "Create a card with a title, supporting text, and a clear button.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "card"],
+    fileName: "feature-card.tsx",
+    outputLabel: "Card",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Feature Card"),
+  },
+  {
+    slug: "pricing-card-generator",
+    name: "Pricing Card Generator",
+    tagline: "Build a plan card with a price-led layout.",
+    description: "Generate a compact pricing card with a label, body copy, and CTA.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "pricing"],
+    fileName: "pricing-card.tsx",
+    outputLabel: "Pricing card",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Pricing Card"),
+  },
+  {
+    slug: "testimonial-card-generator",
+    name: "Testimonial Card Generator",
+    tagline: "Create a testimonial that reads cleanly on landing pages.",
+    description: "Generate a quote-style card with attribution and a clear accent.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "testimonial"],
+    fileName: "testimonial-card.tsx",
+    outputLabel: "Testimonial",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Testimonial"),
+  },
+  {
+    slug: "stats-card-generator",
+    name: "Stats Card Generator",
+    tagline: "Show a metric in a tidy, modern card.",
+    description: "Generate a metric card with a large stat and supporting context.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "stats"],
+    fileName: "stats-card.tsx",
+    outputLabel: "Stats card",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Stats Card"),
+  },
+  {
+    slug: "section-header-generator",
+    name: "Section Header Generator",
+    tagline: "Generate a section header with hierarchy and spacing.",
+    description: "Create a compact section heading block for a landing page or dashboard.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "header"],
+    fileName: "section-header.tsx",
+    outputLabel: "Header",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Section Header"),
+  },
+  {
+    slug: "hero-cta-generator",
+    name: "Hero CTA Generator",
+    tagline: "Build a hero call-to-action block quickly.",
+    description: "Generate a hero surface with a strong headline and action buttons.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "hero"],
+    fileName: "hero-cta.tsx",
+    outputLabel: "Hero CTA",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Hero CTA"),
+    featured: true,
+  },
+  {
+    slug: "newsletter-form-generator",
+    name: "Newsletter Form Generator",
+    tagline: "Create an email signup form that feels polished.",
+    description: "Generate a compact newsletter block with a clear action and supportive body.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "form"],
+    fileName: "newsletter-form.tsx",
+    outputLabel: "Newsletter",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Newsletter Form"),
+  },
+  {
+    slug: "navbar-generator",
+    name: "Navbar Generator",
+    tagline: "Draft a responsive navigation bar fast.",
+    description: "Generate a navigation bar with brand text, links, and a CTA.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "nav"],
+    fileName: "navbar.tsx",
+    outputLabel: "Navbar",
+    previewKind: "layout",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Navbar"),
+  },
+  {
+    slug: "sidebar-generator",
+    name: "Sidebar Generator",
+    tagline: "Build a sidebar shell for dashboards and tools.",
+    description: "Generate a sidebar layout with room for navigation and supporting info.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "sidebar"],
+    fileName: "sidebar.tsx",
+    outputLabel: "Sidebar",
+    previewKind: "layout",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Sidebar"),
+  },
+  {
+    slug: "footer-generator",
+    name: "Footer Generator",
+    tagline: "Create a clean footer with links and supporting text.",
+    description: "Generate a simple footer block for landing pages and app shells.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "footer"],
+    fileName: "footer.tsx",
+    outputLabel: "Footer",
+    previewKind: "layout",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Footer"),
+  },
+  {
+    slug: "search-input-generator",
+    name: "Search Input Generator",
+    tagline: "Build a search field with a fast UI shell.",
+    description: "Generate a search bar with placeholder text and a clear button state.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "search"],
+    fileName: "search-input.tsx",
+    outputLabel: "Search",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Search Input"),
+  },
+  {
+    slug: "toggle-switch-generator",
+    name: "Toggle Switch Generator",
+    tagline: "Create a small switch control in Tailwind.",
+    description: "Generate a toggle UI with a label, accent color, and rounded track.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "toggle"],
+    fileName: "toggle-switch.tsx",
+    outputLabel: "Toggle",
+    previewKind: "component",
+    fields: twLabelFields,
+    buildOutput: (values) => makeTailwindPillOutput(values, "Toggle"),
+  },
+  {
+    slug: "tabs-generator",
+    name: "Tabs Generator",
+    tagline: "Build a tab strip for segmented content.",
+    description: "Generate a tab header row with a clear active state and rounded controls.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "tabs"],
+    fileName: "tabs.tsx",
+    outputLabel: "Tabs",
+    previewKind: "layout",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Tabs"),
+  },
+  {
+    slug: "tooltip-generator",
+    name: "Tooltip Generator",
+    tagline: "Create a helpful tooltip shell instantly.",
+    description: "Generate a tiny tooltip component for inline hints and microcopy.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "tooltip"],
+    fileName: "tooltip.tsx",
+    outputLabel: "Tooltip",
+    previewKind: "component",
+    fields: twLabelFields,
+    buildOutput: (values) => makeTailwindPillOutput(values, "Tooltip"),
+  },
+  {
+    slug: "modal-generator",
+    name: "Modal Generator",
+    tagline: "Build a modal shell with title and actions.",
+    description: "Generate a dialog panel with room for content and a CTA pair.",
+    category: "tailwind-css",
+    cluster: "tailwind",
+    tags: ["tailwind", "modal"],
+    fileName: "modal.tsx",
+    outputLabel: "Modal",
+    previewKind: "component",
+    fields: twSurfaceFields,
+    buildOutput: (values) => makeTailwindPanelOutput(values, "Modal"),
+  },
+];
+
+const extraNextGeneratorSpecs: GeneratorSpec[] = [
+  {
+    slug: "home-page-generator",
+    name: "Home Page Generator",
+    tagline: "Draft a concise home page with a strong hero.",
+    description: "Generate a home page scaffold with metadata and a clear call to action.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "home"],
+    fileName: "page.tsx",
+    outputLabel: "Home page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "HomePage"),
+    featured: true,
+  },
+  {
+    slug: "landing-page-generator",
+    name: "Landing Page Generator",
+    tagline: "Create a landing page with room for sections.",
+    description: "Generate a landing page scaffold with SEO metadata and a side panel.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "landing-page"],
+    fileName: "page.tsx",
+    outputLabel: "Landing page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "LandingPage"),
+  },
+  {
+    slug: "pricing-page-generator",
+    name: "Pricing Page Generator",
+    tagline: "Set up a pricing page with a direct conversion flow.",
+    description: "Generate a pricing-focused page scaffold with CTA buttons and metadata.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "pricing"],
+    fileName: "page.tsx",
+    outputLabel: "Pricing page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "PricingPage"),
+  },
+  {
+    slug: "about-page-generator",
+    name: "About Page Generator",
+    tagline: "Create an about page with a clear story block.",
+    description: "Generate an about page scaffold with metadata and a supportive sidebar panel.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "about"],
+    fileName: "page.tsx",
+    outputLabel: "About page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "AboutPage"),
+  },
+  {
+    slug: "contact-page-generator",
+    name: "Contact Page Generator",
+    tagline: "Build a contact page that feels simple and direct.",
+    description: "Generate a contact page scaffold with a clear CTA and metadata.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "contact"],
+    fileName: "page.tsx",
+    outputLabel: "Contact page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "ContactPage"),
+  },
+  {
+    slug: "blog-index-generator",
+    name: "Blog Index Generator",
+    tagline: "Create a blog listing page with a tidy layout.",
+    description: "Generate a blog index page scaffold with metadata and content hierarchy.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "blog"],
+    fileName: "page.tsx",
+    outputLabel: "Blog index",
+    previewKind: "layout",
+    fields: nextContentFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "BlogIndexPage"),
+  },
+  {
+    slug: "blog-post-generator",
+    name: "Blog Post Generator",
+    tagline: "Draft a blog post template with article structure.",
+    description: "Generate a blog article page scaffold with SEO metadata and a read flow.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "blog", "article"],
+    fileName: "page.tsx",
+    outputLabel: "Blog post",
+    previewKind: "layout",
+    fields: nextContentFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "BlogPostPage"),
+  },
+  {
+    slug: "docs-index-generator",
+    name: "Docs Index Generator",
+    tagline: "Create a docs landing page with navigation hints.",
+    description: "Generate a documentation home page scaffold with metadata and a sidebar.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "docs"],
+    fileName: "page.tsx",
+    outputLabel: "Docs index",
+    previewKind: "layout",
+    fields: nextContentFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "DocsIndexPage"),
+  },
+  {
+    slug: "docs-page-generator",
+    name: "Docs Page Generator",
+    tagline: "Build a docs article page with a crisp reading layout.",
+    description: "Generate a documentation page scaffold with metadata and call to action.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "docs", "article"],
+    fileName: "page.tsx",
+    outputLabel: "Docs page",
+    previewKind: "layout",
+    fields: nextContentFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "DocsPage"),
+  },
+  {
+    slug: "login-page-generator",
+    name: "Login Page Generator",
+    tagline: "Create a login screen with a minimal layout.",
+    description: "Generate a sign-in page scaffold with a focused form and metadata.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "auth"],
+    fileName: "page.tsx",
+    outputLabel: "Login page",
+    previewKind: "component",
+    fields: nextAuthFields,
+    buildOutput: (values) => makeNextAuthPageOutput(values, "LoginPage"),
+    featured: true,
+  },
+  {
+    slug: "signup-page-generator",
+    name: "Signup Page Generator",
+    tagline: "Create a signup flow with a supportive form shell.",
+    description: "Generate a registration page scaffold with sign-up copy and CTA.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "auth", "signup"],
+    fileName: "page.tsx",
+    outputLabel: "Signup page",
+    previewKind: "component",
+    fields: nextAuthFields,
+    buildOutput: (values) => makeNextAuthPageOutput(values, "SignupPage"),
+  },
+  {
+    slug: "forgot-password-generator",
+    name: "Forgot Password Generator",
+    tagline: "Draft the first step of a password reset flow.",
+    description: "Generate a recovery page scaffold with a clean form and helper text.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "auth", "recovery"],
+    fileName: "page.tsx",
+    outputLabel: "Recovery page",
+    previewKind: "component",
+    fields: nextAuthFields,
+    buildOutput: (values) => makeNextAuthPageOutput(values, "ForgotPasswordPage"),
+  },
+  {
+    slug: "reset-password-generator",
+    name: "Reset Password Generator",
+    tagline: "Create a password reset screen with a direct form layout.",
+    description: "Generate a reset page scaffold with a secure form and clear CTA.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "auth", "reset"],
+    fileName: "page.tsx",
+    outputLabel: "Reset page",
+    previewKind: "component",
+    fields: nextAuthFields,
+    buildOutput: (values) => makeNextAuthPageOutput(values, "ResetPasswordPage"),
+  },
+  {
+    slug: "dashboard-page-generator",
+    name: "Dashboard Page Generator",
+    tagline: "Set up a dashboard overview with a shell layout.",
+    description: "Generate a dashboard landing page scaffold with metadata and a sidebar panel.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "dashboard"],
+    fileName: "page.tsx",
+    outputLabel: "Dashboard page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "DashboardPage"),
+  },
+  {
+    slug: "settings-page-generator",
+    name: "Settings Page Generator",
+    tagline: "Create a settings page with space for controls.",
+    description: "Generate a settings page scaffold with metadata and a side panel.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "settings"],
+    fileName: "page.tsx",
+    outputLabel: "Settings page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "SettingsPage"),
+  },
+  {
+    slug: "profile-page-generator",
+    name: "Profile Page Generator",
+    tagline: "Build a profile page with a simple content shell.",
+    description: "Generate a profile page scaffold with metadata and a sidebar card.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "profile"],
+    fileName: "page.tsx",
+    outputLabel: "Profile page",
+    previewKind: "layout",
+    fields: nextPageFields,
+    buildOutput: (values) => makeNextMarketingPageOutput(values, "ProfilePage"),
+  },
+  {
+    slug: "api-health-route-generator",
+    name: "API Health Route Generator",
+    tagline: "Generate a tiny health-check endpoint fast.",
+    description: "Create a route handler that responds with a simple JSON status object.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "api", "health"],
+    fileName: "route.ts",
+    outputLabel: "Route handler",
+    previewKind: "code",
+    fields: nextRoutePlusFields,
+    buildOutput: (values) => makeNextRouteHandlerOutput(values, "health"),
+    featured: true,
+  },
+  {
+    slug: "webhook-route-generator",
+    name: "Webhook Route Generator",
+    tagline: "Build a webhook endpoint scaffold with one pass.",
+    description: "Create a route handler for receiving webhook payloads and returning JSON.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "webhook"],
+    fileName: "route.ts",
+    outputLabel: "Webhook route",
+    previewKind: "code",
+    fields: nextRoutePlusFields,
+    buildOutput: (values) => makeNextRouteHandlerOutput(values, "webhook"),
+  },
+  {
+    slug: "newsletter-route-generator",
+    name: "Newsletter Route Generator",
+    tagline: "Create a newsletter submit endpoint quickly.",
+    description: "Generate a route handler for collecting newsletter subscriptions.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "newsletter"],
+    fileName: "route.ts",
+    outputLabel: "Newsletter route",
+    previewKind: "code",
+    fields: nextRoutePlusFields,
+    buildOutput: (values) => makeNextRouteHandlerOutput(values, "newsletter"),
+  },
+  {
+    slug: "middleware-generator",
+    name: "Middleware Generator",
+    tagline: "Draft middleware code for request checks and redirects.",
+    description: "Generate a middleware.ts snippet with a compact request guard.",
+    category: "nextjs",
+    cluster: "nextjs",
+    tags: ["nextjs", "middleware"],
+    fileName: "middleware.ts",
+    outputLabel: "Middleware",
+    previewKind: "code",
+    fields: nextRoutePlusFields,
+    buildOutput: (values) => `import { NextResponse } from "next/server";
+
+export function middleware(request: Request) {
+  const url = new URL(request.url);
+  return NextResponse.json({
+    path: url.pathname,
+    route: "${str(values, "routePath")}",
+    resource: "${str(values, "resource")}",
+  });
+}`,
+  },
+];
+
+export const generatorToolSpecs = [...tailwindGeneratorSpecs, ...nextGeneratorSpecs, ...extraTailwindGeneratorSpecs, ...extraNextGeneratorSpecs];
 
 export function getGeneratorSpec(slug: string): GeneratorSpec | undefined {
   return generatorToolSpecs.find((spec) => spec.slug === slug);

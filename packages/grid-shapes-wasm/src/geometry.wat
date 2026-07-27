@@ -315,3 +315,4 @@
     end
 
     local.get $count)
+)
