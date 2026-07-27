@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ToolPageShell } from "@/components/ToolPageShell";
-import { getTool } from "@/data/tools";
+import { getTool, tools } from "@/data/tools";
 import { getToolView } from "@/data/tool-renders";
 
 interface ToolRouteProps {
   params: Promise<{ slug: string }>;
+}
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return tools.map((tool) => ({ slug: tool.slug }));
 }
 
 export async function generateMetadata({ params }: ToolRouteProps): Promise<Metadata> {

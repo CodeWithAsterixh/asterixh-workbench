@@ -48,13 +48,12 @@ function getContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
 }
 
 async function getPdfJs() {
-  const pdfjs: any = await import("pdfjs-dist/legacy/build/pdf.mjs");
-  return pdfjs;
+  return await import("pdfjs-dist/webpack.mjs");
 }
 
 async function loadDocument(bytes: Uint8Array, password?: string) {
   const pdfjs = await getPdfJs();
-  const loadingTask = pdfjs.getDocument({ data: bytes, password: password || undefined, disableWorker: true });
+  const loadingTask = pdfjs.getDocument({ data: bytes, password: password || undefined });
   return await loadingTask.promise;
 }
 
@@ -164,16 +163,20 @@ async function ocrPdf(file: File, options: PdfWorkbenchOptions, onProgress?: (co
       const img = new Image();
       const pageBytes = new Uint8Array(page.data.byteLength);
       pageBytes.set(page.data);
-      img.src = URL.createObjectURL(new Blob([pageBytes.buffer], { type: options.outputFormat }));
-      await new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve();
-        img.onerror = () => reject(new Error(`Couldn't read page ${i + 1}.`));
-      });
-      ctx.drawImage(img, 0, 0);
-      const result = await worker.recognize(canvas);
-      lines.push(`--- Page ${i + 1} ---`, result.data.text.trim() || "(no text found)", "");
-      onProgress?.(i + 1, pages.length);
-      URL.revokeObjectURL(img.src);
+      const pageUrl = URL.createObjectURL(new Blob([pageBytes.buffer], { type: options.outputFormat }));
+      try {
+        img.src = pageUrl;
+        await new Promise<void>((resolve, reject) => {
+          img.onload = () => resolve();
+          img.onerror = () => reject(new Error(`Couldn't read page ${i + 1}.`));
+        });
+        ctx.drawImage(img, 0, 0);
+        const result = await worker.recognize(canvas);
+        lines.push(`--- Page ${i + 1} ---`, result.data.text.trim() || "(no text found)", "");
+        onProgress?.(i + 1, pages.length);
+      } finally {
+        URL.revokeObjectURL(pageUrl);
+      }
     }
   } finally {
     await worker.terminate();

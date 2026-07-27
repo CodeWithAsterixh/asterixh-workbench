@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/lib/animations";
+import { GridShapeBackdrop } from "@/components/tool-ui/GridShapeBackdrop";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { howItWorks } from "@/data/how-it-works";
 import { getTool } from "@/data/tools";
@@ -27,8 +28,9 @@ export function ToolPageShell({ title, description, badge = "Live", slug, childr
 
   return (
     <>
-      <section data-theme="shell" className="pt-48 pb-28">
-        <div className="container">
+      <section data-theme="shell" className="relative overflow-hidden pt-48 pb-28">
+        <GridShapeBackdrop />
+        <div className="container relative z-10">
           <Reveal className="flex flex-col gap-5">
             <nav className="timecode mb-8" aria-label="Breadcrumb">
               <Link href="/tools" className="hover:text-(--text-primary) transition-colors">

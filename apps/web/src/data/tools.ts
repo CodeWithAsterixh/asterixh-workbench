@@ -1,4 +1,5 @@
 import type { CategoryId } from "@/data/categories";
+import { generatorToolSpecs } from "@/features/code-generators";
 
 export interface ToolSpec {
   slug: string;
@@ -763,6 +764,17 @@ export const tools: ToolSpec[] = [
     href: "/tools/filter-generator",
     category: "css",
   },
+  ...generatorToolSpecs.map((spec) => ({
+    slug: spec.slug,
+    name: spec.name,
+    tagline: spec.tagline,
+    description: spec.description,
+    status: "live" as const,
+    tags: spec.tags,
+    href: `/tools/${spec.slug}`,
+    category: spec.category,
+    featured: spec.featured,
+  })),
 ];
 
 export function getTool(slug: string): ToolSpec | undefined {

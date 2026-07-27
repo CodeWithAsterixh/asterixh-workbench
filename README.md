@@ -1,7 +1,7 @@
 # Workbench
 
 A browser-first tools platform for developers, designers, creators, and
-everyday internet users. The current site has seventy-four live tools and is
+everyday internet users. The current site has one hundred live tools and is
 structured so new utilities, supporting articles, and reusable browser
 workflows can be added without rebuilding the whole site.
 

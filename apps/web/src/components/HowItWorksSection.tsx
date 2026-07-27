@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowDownToLine, ArrowUpFromLine, BookOpenText, LayoutGrid, Sparkles } from "lucide-react";
 import { Reveal } from "@/lib/animations";
+import { GridShapeBackdrop } from "@/components/tool-ui/GridShapeBackdrop";
 import { getCategory } from "@/data/categories";
 import { tools, type ToolSpec } from "@/data/tools";
 import type { HowItWorks } from "@/data/how-it-works";
@@ -34,10 +35,16 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
   const category = getCategory(tool.category);
   const relatedTools = tools.filter((item) => item.category === tool.category && item.slug !== tool.slug).slice(0, 4);
   const articles = buildArticles(tool, category.label);
+  const quickFacts = [
+    { label: "Category", value: category.label },
+    { label: "Surface", value: "Browser-side" },
+    { label: "Focus", value: tool.tags.slice(0, 3).join(" / ") || "Utility" },
+  ];
 
   return (
-    <section data-theme="shell" className="section" style={{ color: "var(--text-primary)" }}>
-      <div className="container">
+    <section data-theme="shell" className="section relative overflow-hidden" style={{ color: "var(--text-primary)" }}>
+      <GridShapeBackdrop />
+      <div className="container relative z-10">
         <Reveal className="flex flex-col gap-5">
           <span className="eyebrow">How it works</span>
           <h2 className="text-display-md mt-4 max-w-3xl">
@@ -48,6 +55,17 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
             output, steps, related tools, and article ideas that help the page stand on its own.
           </p>
         </Reveal>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {quickFacts.map((fact) => (
+            <Reveal key={fact.label}>
+              <div className="card">
+                <p className="eyebrow">{fact.label}</p>
+                <p className="mt-4 text-lg text-[var(--text-primary)]">{fact.value}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal>

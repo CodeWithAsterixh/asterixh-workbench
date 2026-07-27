@@ -1,0 +1,1 @@
+export const wasmBytes = new Uint8Array([]);

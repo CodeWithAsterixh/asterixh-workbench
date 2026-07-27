@@ -1,3 +1,5 @@
+import { collectBoundaryEdgesFromGrid } from "@workbench-tools/grid-shapes-wasm";
+
 /**
  * Turns a set of filled grid cells into a smooth SVG path outline, with
  * every boundary corner — convex (outer) AND concave (inner notches) —
@@ -48,6 +50,15 @@ interface UnitEdge {
   ownerKey: CellKey;
 }
 
+interface GridEdge {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  ownerRow: number;
+  ownerCol: number;
+}
+
 interface Corner {
   x: number;
   y: number;
@@ -56,20 +67,31 @@ interface Corner {
   ownerKey: CellKey;
 }
 
-/** Every filled cell emits an edge on each side that isn't shared with another filled cell. */
-function collectBoundaryEdges(filled: Set<CellKey>): UnitEdge[] {
-  const edges: UnitEdge[] = [];
+function collectBoundaryEdgesFallback(grid: Uint8Array, rows: number, cols: number): GridEdge[] {
+  const edges: GridEdge[] = [];
 
-  for (const key of filled) {
-    const { row: r, col: c } = parseCellKey(key);
+  for (let r = 0; r < rows; r++) {
+    const rowBase = r * cols;
+    for (let c = 0; c < cols; c++) {
+      const idx = rowBase + c;
+      if (!grid[idx]) continue;
 
-    if (!filled.has(cellKey(r - 1, c))) edges.push({ x1: c, y1: r, x2: c + 1, y2: r, ownerKey: key }); // top
-    if (!filled.has(cellKey(r, c + 1))) edges.push({ x1: c + 1, y1: r, x2: c + 1, y2: r + 1, ownerKey: key }); // right
-    if (!filled.has(cellKey(r + 1, c))) edges.push({ x1: c + 1, y1: r + 1, x2: c, y2: r + 1, ownerKey: key }); // bottom
-    if (!filled.has(cellKey(r, c - 1))) edges.push({ x1: c, y1: r + 1, x2: c, y2: r, ownerKey: key }); // left
+      if (r === 0 || !grid[idx - cols]) edges.push({ x1: c, y1: r, x2: c + 1, y2: r, ownerRow: r, ownerCol: c });
+      if (c === cols - 1 || !grid[idx + 1]) edges.push({ x1: c + 1, y1: r, x2: c + 1, y2: r + 1, ownerRow: r, ownerCol: c });
+      if (r === rows - 1 || !grid[idx + cols]) edges.push({ x1: c + 1, y1: r + 1, x2: c, y2: r + 1, ownerRow: r, ownerCol: c });
+      if (c === 0 || !grid[idx - 1]) edges.push({ x1: c, y1: r + 1, x2: c, y2: r, ownerRow: r, ownerCol: c });
+    }
   }
 
   return edges;
+}
+
+function collectBoundaryEdges(grid: Uint8Array, rows: number, cols: number): GridEdge[] {
+  try {
+    return collectBoundaryEdgesFromGrid(grid, rows, cols);
+  } catch {
+    return collectBoundaryEdgesFallback(grid, rows, cols);
+  }
 }
 
 /** Links unit edges (each walked clockwise around its owning cell) into closed boundary loops. */
@@ -215,19 +237,33 @@ export function buildShapePath(
     maxCol = Math.max(maxCol, col);
   }
 
-  const edges = collectBoundaryEdges(filled);
+  const rows = maxRow - minRow + 1;
+  const cols = maxCol - minCol + 1;
+  const grid = new Uint8Array(rows * cols);
+  for (const key of filled) {
+    const { row, col } = parseCellKey(key);
+    grid[(row - minRow) * cols + (col - minCol)] = 1;
+  }
+
+  const edges = collectBoundaryEdges(grid, rows, cols).map<UnitEdge>((edge) => ({
+    x1: edge.x1,
+    y1: edge.y1,
+    x2: edge.x2,
+    y2: edge.y2,
+    ownerKey: cellKey(edge.ownerRow + minRow, edge.ownerCol + minCol),
+  }));
   const loops = linkLoops(edges);
   const radiusForOwner = (key: CellKey) => cellRadiusOverrides.get(key) ?? defaultRadius;
 
   const path = loops
     .map((loop) => extractCorners(loop))
     .filter((corners) => corners.length >= 4)
-    .map((corners) => buildLoopPath(corners, radiusForOwner, cellSize, minCol, minRow))
+    .map((corners) => buildLoopPath(corners, radiusForOwner, cellSize, 0, 0))
     .join(" ");
 
   return {
     path,
-    width: (maxCol - minCol + 1) * cellSize,
-    height: (maxRow - minRow + 1) * cellSize,
+    width: cols * cellSize,
+    height: rows * cellSize,
   };
 }

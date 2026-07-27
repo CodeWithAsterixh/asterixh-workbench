@@ -224,19 +224,31 @@ async function exportAudioBuffer(buffer: AudioBuffer, mimeType: string) {
   return await done;
 }
 
-async function loadVideo(file: File): Promise<HTMLVideoElement> {
+interface LoadedVideo {
+  video: HTMLVideoElement;
+  revoke: () => void;
+}
+
+async function loadVideo(file: File): Promise<LoadedVideo> {
   const url = URL.createObjectURL(file);
   const video = document.createElement("video");
   video.src = url;
   video.preload = "auto";
   video.muted = true;
   video.playsInline = true;
-  await new Promise<void>((resolve, reject) => {
-    video.onloadedmetadata = () => resolve();
-    video.onerror = () => reject(new Error(`Couldn't load "${file.name}".`));
-  });
-  URL.revokeObjectURL(url);
-  return video;
+  try {
+    await new Promise<void>((resolve, reject) => {
+      video.onloadedmetadata = () => resolve();
+      video.onerror = () => reject(new Error(`Couldn't load "${file.name}".`));
+    });
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+  return {
+    video,
+    revoke: () => URL.revokeObjectURL(url),
+  };
 }
 
 async function seek(video: HTMLVideoElement, time: number) {
@@ -329,86 +341,96 @@ async function recordVideoFrameSequence(
 }
 
 async function convertVideo(file: File, options: MediaWorkbenchOptions, mode: VideoMode): Promise<Blob> {
-  const video = await loadVideo(file);
-  const sourceWidth = video.videoWidth || options.width;
-  const sourceHeight = video.videoHeight || options.height;
-  const width = mode === "resize" ? options.width || sourceWidth : sourceWidth;
-  const height = mode === "resize" ? options.height || sourceHeight : sourceHeight;
-  const cropWidth = Math.min(sourceWidth, options.width || sourceWidth);
-  const cropHeight = Math.min(sourceHeight, options.height || sourceHeight);
+  const loaded = await loadVideo(file);
+  const video = loaded.video;
+  try {
+    const sourceWidth = video.videoWidth || options.width;
+    const sourceHeight = video.videoHeight || options.height;
+    const width = mode === "resize" ? options.width || sourceWidth : sourceWidth;
+    const height = mode === "resize" ? options.height || sourceHeight : sourceHeight;
+    const cropWidth = Math.min(sourceWidth, options.width || sourceWidth);
+    const cropHeight = Math.min(sourceHeight, options.height || sourceHeight);
 
-  const drawFrame = (ctx: CanvasRenderingContext2D, currentVideo: HTMLVideoElement) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    if (mode === "crop") {
-      const sx = Math.max(0, Math.round((sourceWidth - cropWidth) / 2));
-      const sy = Math.max(0, Math.round((sourceHeight - cropHeight) / 2));
-      ctx.drawImage(currentVideo, sx, sy, cropWidth, cropHeight, 0, 0, ctx.canvas.width, ctx.canvas.height);
-      return;
-    }
-    if (mode === "resize") {
+    const drawFrame = (ctx: CanvasRenderingContext2D, currentVideo: HTMLVideoElement) => {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      if (mode === "crop") {
+        const sx = Math.max(0, Math.round((sourceWidth - cropWidth) / 2));
+        const sy = Math.max(0, Math.round((sourceHeight - cropHeight) / 2));
+        ctx.drawImage(currentVideo, sx, sy, cropWidth, cropHeight, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        return;
+      }
+      if (mode === "resize") {
+        ctx.drawImage(currentVideo, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        return;
+      }
       ctx.drawImage(currentVideo, 0, 0, ctx.canvas.width, ctx.canvas.height);
-      return;
+    };
+
+    if (mode === "reverse") {
+      return await recordVideoFrameSequence(video, { ...options, width, height }, drawFrame, true);
     }
-    ctx.drawImage(currentVideo, 0, 0, ctx.canvas.width, ctx.canvas.height);
-  };
 
-  if (mode === "reverse") {
-    return await recordVideoFrameSequence(video, { ...options, width, height }, drawFrame, true);
+    const canvas = createCanvas(width, height);
+    const ctx = getContext(canvas);
+    const stream = canvas.captureStream(Math.max(1, options.fps));
+
+    const audioStream = getVideoStream(video);
+    const audioTracks = audioStream?.getAudioTracks() ?? [];
+    const merged = audioTracks.length > 0 ? new MediaStream([...stream.getVideoTracks(), ...audioTracks]) : stream;
+    const mimeType = pickMediaMimeType("video", options.outputMime);
+    const videoRecorder = new MediaRecorder(merged, { mimeType });
+    const videoChunks: BlobPart[] = [];
+    const final = new Promise<Blob>((resolve, reject) => {
+      videoRecorder.ondataavailable = (event) => event.data.size > 0 && videoChunks.push(event.data);
+      videoRecorder.onerror = () => reject(new Error("Video recording failed."));
+      videoRecorder.onstop = () => resolve(new Blob(videoChunks, { type: videoRecorder.mimeType }));
+    });
+
+    videoRecorder.start();
+    await seek(video, options.start || 0);
+    await video.play();
+    const stopAt = Math.min(video.duration, options.end || video.duration);
+    while (video.currentTime < stopAt) {
+      drawFrame(ctx, video);
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+    }
+    await video.pause();
+    videoRecorder.stop();
+    return await final;
+  } finally {
+    loaded.revoke();
   }
-
-  const canvas = createCanvas(width, height);
-  const ctx = getContext(canvas);
-  const stream = canvas.captureStream(Math.max(1, options.fps));
-
-  const audioStream = getVideoStream(video);
-  const audioTracks = audioStream?.getAudioTracks() ?? [];
-  const merged = audioTracks.length > 0 ? new MediaStream([...stream.getVideoTracks(), ...audioTracks]) : stream;
-  const mimeType = pickMediaMimeType("video", options.outputMime);
-  const videoRecorder = new MediaRecorder(merged, { mimeType });
-  const videoChunks: BlobPart[] = [];
-  const final = new Promise<Blob>((resolve, reject) => {
-    videoRecorder.ondataavailable = (event) => event.data.size > 0 && videoChunks.push(event.data);
-    videoRecorder.onerror = () => reject(new Error("Video recording failed."));
-    videoRecorder.onstop = () => resolve(new Blob(videoChunks, { type: videoRecorder.mimeType }));
-  });
-
-  videoRecorder.start();
-  await seek(video, options.start || 0);
-  await video.play();
-  const stopAt = Math.min(video.duration, options.end || video.duration);
-  while (video.currentTime < stopAt) {
-    drawFrame(ctx, video);
-    await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
-  }
-  await video.pause();
-  videoRecorder.stop();
-  return await final;
 }
 
 async function extractAudioFromVideo(file: File, options: MediaWorkbenchOptions): Promise<Blob> {
-  const video = await loadVideo(file);
-  const stream = getVideoStream(video);
-  if (!stream) throw new Error("This browser cannot capture media from the video element.");
-  const audioTracks = stream.getAudioTracks();
-  if (audioTracks.length === 0) throw new Error("That video doesn't expose an audio track.");
-  const audioStream = new MediaStream(audioTracks);
-  const mimeType = pickMediaMimeType("audio", options.outputMime);
-  const recorder = new MediaRecorder(audioStream, { mimeType });
-  const chunks: BlobPart[] = [];
-  const done = new Promise<Blob>((resolve, reject) => {
-    recorder.ondataavailable = (event) => event.data.size > 0 && chunks.push(event.data);
-    recorder.onerror = () => reject(new Error("Audio extraction failed."));
-    recorder.onstop = () => resolve(new Blob(chunks, { type: mimeType }));
-  });
-  recorder.start();
-  await seek(video, options.start || 0);
-  await video.play();
-  while (video.currentTime < Math.min(video.duration, options.end || video.duration)) {
-    await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+  const loaded = await loadVideo(file);
+  const video = loaded.video;
+  try {
+    const stream = getVideoStream(video);
+    if (!stream) throw new Error("This browser cannot capture media from the video element.");
+    const audioTracks = stream.getAudioTracks();
+    if (audioTracks.length === 0) throw new Error("That video doesn't expose an audio track.");
+    const audioStream = new MediaStream(audioTracks);
+    const mimeType = pickMediaMimeType("audio", options.outputMime);
+    const recorder = new MediaRecorder(audioStream, { mimeType });
+    const chunks: BlobPart[] = [];
+    const done = new Promise<Blob>((resolve, reject) => {
+      recorder.ondataavailable = (event) => event.data.size > 0 && chunks.push(event.data);
+      recorder.onerror = () => reject(new Error("Audio extraction failed."));
+      recorder.onstop = () => resolve(new Blob(chunks, { type: mimeType }));
+    });
+    recorder.start();
+    await seek(video, options.start || 0);
+    await video.play();
+    while (video.currentTime < Math.min(video.duration, options.end || video.duration)) {
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+    }
+    await video.pause();
+    recorder.stop();
+    return await done;
+  } finally {
+    loaded.revoke();
   }
-  await video.pause();
-  recorder.stop();
-  return await done;
 }
 
 export async function runMediaWorkbench(

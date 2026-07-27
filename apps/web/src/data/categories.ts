@@ -8,7 +8,9 @@ export type CategoryId =
   | "documents"
   | "developer"
   | "calculators"
-  | "text";
+  | "text"
+  | "tailwind-css"
+  | "nextjs";
 
 export interface CategorySpec {
   id: CategoryId;
@@ -27,6 +29,8 @@ export const categories: CategorySpec[] = [
   { id: "developer", label: "Developer Utilities", description: "JSON, regex, encoding, and timestamp tools." },
   { id: "calculators", label: "Calculators", description: "Percentage and everyday number helpers." },
   { id: "text", label: "Text", description: "Plain-text manipulation." },
+  { id: "tailwind-css", label: "Tailwind CSS", description: "Utility-first generators for production UI systems." },
+  { id: "nextjs", label: "Next.js", description: "App Router, scaffolding, and project structure generators." },
 ];
 
 export function getCategory(id: CategoryId): CategorySpec {

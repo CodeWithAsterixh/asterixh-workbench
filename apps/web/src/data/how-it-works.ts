@@ -1,3 +1,6 @@
+import { generatorToolSpecs } from "@/features/code-generators";
+import { buildGeneratorHowItWorks } from "@/features/code-generators/lib/common";
+
 export interface HowItWorksStep {
   title: string;
   body: string;
@@ -750,4 +753,5 @@ export const howItWorks: Record<string, HowItWorks> = {
       { title: "Copy the result", body: "The rejoined text is ready to copy, alongside a chip view of every shuffled piece." },
     ],
   },
+  ...Object.fromEntries(generatorToolSpecs.map((spec) => [spec.slug, buildGeneratorHowItWorks(spec)])),
 };

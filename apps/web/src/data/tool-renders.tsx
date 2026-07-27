@@ -27,6 +27,7 @@ import { TextShufflerTool } from "@/features/text-shuffler";
 import { TimestampConverterTool } from "@/features/timestamp-converter";
 import { UrlTool } from "@/features/url-tool";
 import { UuidGeneratorTool } from "@/features/uuid-generator";
+import { CodeGeneratorTool, generatorToolSpecs } from "@/features/code-generators";
 import { VideoToFramesTool } from "@/features/video-to-frames";
 import { WordCounterTool } from "@/features/word-counter";
 import { ImageWorkbenchTool, PdfWorkbenchTool, MediaWorkbenchTool, CssWorkbenchTool } from "@/features/utility-lab";
@@ -59,6 +60,12 @@ function makeMediaView(
 function makeCssView(mode: Parameters<typeof CssWorkbenchTool>[0]["mode"], title: string, summary: string): ToolView {
   return function CssView() {
     return <CssWorkbenchTool mode={mode} title={title} summary={summary} />;
+  };
+}
+
+function makeGeneratorView(slug: string): ToolView {
+  return function GeneratorView() {
+    return <CodeGeneratorTool slug={slug} />;
   };
 }
 
@@ -124,6 +131,16 @@ export const toolViewsByCategory: Record<CategoryId, Record<string, ToolView>> =
     "transform-generator": makeCssView("transform", "Transform Generator", "Compose translate, scale, rotate, and skew values."),
     "filter-generator": makeCssView("filter", "Filter Generator", "Tune a live CSS filter stack for previews and UI art."),
   },
+  "tailwind-css": Object.fromEntries(
+    generatorToolSpecs
+      .filter((spec) => spec.category === "tailwind-css")
+      .map((spec) => [spec.slug, makeGeneratorView(spec.slug)]),
+  ),
+  nextjs: Object.fromEntries(
+    generatorToolSpecs
+      .filter((spec) => spec.category === "nextjs")
+      .map((spec) => [spec.slug, makeGeneratorView(spec.slug)]),
+  ),
   documents: {
     "pdf-tools": PdfToolsTool,
     "pdf-compressor": makePdfView("compress", "PDF Compressor", "Rasterize and compress PDFs locally with quality controls."),

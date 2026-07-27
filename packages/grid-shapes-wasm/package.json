@@ -1,0 +1,14 @@
+{
+  "name": "@workbench-tools/grid-shapes-wasm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "wabt": "^1.0.39"
+  }
+}
