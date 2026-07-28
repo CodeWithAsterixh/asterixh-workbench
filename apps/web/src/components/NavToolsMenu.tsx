@@ -100,7 +100,7 @@ export function NavToolsMenu() {
                       
                         <li>
                           <Link
-                            href={`/tools/${category.id}`}
+                            href={`/tools#${category.id}`}
                             onClick={() => setOpen(false)}
                             className="text-sm flex items-center gap-2 text-(--accent)!"
                             data-cursor="link"

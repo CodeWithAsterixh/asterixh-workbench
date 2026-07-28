@@ -152,6 +152,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sharp);
   padding: var(--space-lg);
+  max-width: 100%;
 }
 
 .card--sunken {

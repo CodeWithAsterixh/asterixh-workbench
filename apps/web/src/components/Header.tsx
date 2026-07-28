@@ -30,7 +30,7 @@ export function Header() {
         "site-header fixed transition-colors duration-300",
         scrolled
           ? "bg-[var(--surface)]/90 backdrop-blur top-0 border-b left-0 right-0  border-[var(--border)]"
-          : "bg-transparent border-b backdrop-blur-xs w-[90vw] top-2 left-1/2 -translate-x-1/2 border-transparent",
+          : "bg-[var(--surface)]/90 border-b backdrop-blur-xs w-[85vw] top-6 left-1/2 -translate-x-1/2 border-transparent rounded-[1.75rem]",
       )}
       style={{ height: "var(--header-height)" }}
     >

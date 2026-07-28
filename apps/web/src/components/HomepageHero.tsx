@@ -58,11 +58,11 @@ export function HomepageHero() {
   `;
 
   return (
-    <section data-theme="shell" className="relative pt-2 min-h-dvh px-4 bg-(--text-primary)!">
+    <section data-theme="shell" className="relative pt-2 pb-10 min-h-dvh px-4 bg-(--text-primary)!">
       <div className="w-full">
         <div
           ref={containerRef}
-          className="relative h-[calc((100dvh-1rem))] rounded-[2rem] border border-[var(--border)] lg:border-none bg-gradient-to-br from-[var(--surface-raised)] to-[var(--surface)] lg:bg-none p-6 md:p-12 lg:p-16"
+          className="relative flex flex-col pt-[calc(var(--header-height)+2rem)] justify-around lg:block h-[calc((100dvh-1rem))] min-h-fit gap-10 lg:gap-0 rounded-[2rem] border border-[var(--border)] lg:border-none bg-gradient-to-br from-[var(--surface-raised)] to-[var(--surface)] lg:bg-none p-6 md:p-12 lg:p-16"
         >
           {/* Dynamic SVG — dark shell with computed bottom-right notch */}
           <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0">
@@ -76,7 +76,7 @@ export function HomepageHero() {
           </div>
 
           {/* ── Main grid ─────────────────────────────────────── */}
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:h-full">
 
             {/* Left — Headline + CTAs */}
             <div className="lg:col-span-7 flex flex-col justify-center gap-6">

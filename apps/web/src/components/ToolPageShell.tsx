@@ -284,7 +284,7 @@ export function ToolPageShell({ title, description, badge = "Live", slug, childr
   return (
     <>
       <section data-theme="shell" className="relative py-2 px-4 bg-(--text-primary)!">
-          <div ref={containerRef} className="relative h-[calc((100dvh-var(--header-height)))] rounded-[2rem] border border-[var(--border)] lg:border-none bg-gradient-to-br from-[var(--surface-raised)] to-[var(--surface)] lg:bg-none p-6 md:p-12 lg:p-16">
+          <div ref={containerRef} className="relative pt-[calc(var(--header-height)+2rem)] lg:pt-[calc(var(--header-height)+2rem)] flex flex-col justify-around lg:block h-[calc((100dvh-var(--header-height)))] rounded-[2rem] border border-[var(--border)] lg:border-none bg-gradient-to-br from-[var(--surface-raised)] to-[var(--surface)] lg:bg-none p-6 md:p-12 lg:p-16">
             {/* Dynamic SVG background with notch only on lg and up */}
             <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-0">
               <svg className="w-full h-full text-[var(--surface-raised)] fill-current stroke-[var(--border)] stroke-1" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
@@ -292,7 +292,7 @@ export function ToolPageShell({ title, description, badge = "Live", slug, childr
               </svg>
             </div>
             
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:h-full">
               {/* Left Column: Hero Text */}
               <div className="lg:col-span-8">
                 <Reveal className="flex flex-col gap-4">

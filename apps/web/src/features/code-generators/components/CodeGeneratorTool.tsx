@@ -211,7 +211,7 @@ export function CodeGeneratorTool({ slug }: CodeGeneratorToolProps) {
   return (
     <div className="flex flex-col gap-8">
       <Reveal>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(340px,0.95fr)] items-start">
+        <div className="w-full flex flex-col lg:grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(340px,0.95fr)] items-start">
           <div className="card flex flex-col gap-5">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div>
@@ -306,14 +306,14 @@ export function CodeGeneratorTool({ slug }: CodeGeneratorToolProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex max-w-full flex-col gap-4">
             <div className="card">{renderPreview(spec, values)}</div>
             <div className="card flex flex-col gap-3">
               <div className="flex items-center justify-between gap-4">
                 <span className="eyebrow">{spec.outputLabel}</span>
                 <span className="timecode">{spec.fileName}</span>
               </div>
-              <pre className="overflow-auto rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-sunken)] p-4 text-xs leading-6 text-[var(--text-secondary)]">
+              <pre className="overflow-auto max-w-full rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface-sunken)] p-4 text-xs leading-6 text-[var(--text-secondary)]">
                 <code>{output}</code>
               </pre>
             </div>

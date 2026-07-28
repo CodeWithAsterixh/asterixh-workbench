@@ -15,6 +15,7 @@ import { Reveal } from "@/lib/animations";
 import { getCategory } from "@/data/categories";
 import { tools, type ToolSpec } from "@/data/tools";
 import type { HowItWorks } from "@/data/how-it-works";
+import { cn } from "@/lib/utils";
 
 interface HowItWorksSectionProps extends HowItWorks {
   tool: ToolSpec;
@@ -168,7 +169,7 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
 
       {/* SECTION 2: ALTERNATING STEPS TIMELINE */}
       <section className="bg-[var(--surface)] border-t border-[var(--border)] py-24">
-        <div className="container">
+        <div className="container m-auto flex flex-col items-center justify-center gap-5">
           <Reveal className="flex flex-col gap-4 mb-20 text-center items-center">
             <span className="eyebrow text-[var(--accent)]">Execution Flow</span>
             <h2 className="text-display-md font-bold mt-2 max-w-2xl leading-tight" style={{ fontFamily: "var(--font-display)" }}>
@@ -180,7 +181,7 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
           </Reveal>
 
           {/* Vertical Alternating Timeline Container */}
-          <div className="relative mt-12 max-w-5xl mx-auto">
+          <div className="relative max-w-5xl flex flex-col gap-5 mx-auto">
             {/* Center Line for Timeline (Desktop Only) */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-dashed border-l border-dashed border-[var(--border-strong)] transform -translate-x-1/2 z-0"></div>
 
@@ -210,17 +211,17 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
 
                   {/* Step Visual Column */}
                   <div className={`order-3 ${isEven ? "md:order-3 md:justify-start" : "md:order-1 md:justify-end"} flex items-center`}>
-                    <Reveal delay={i * 0.08} className="w-full">
+                    <Reveal delay={i * 0.08} className={cn("w-full")}>
                       {/* Visual placeholder based on the step index */}
                       {i === 0 && (
-                        <div className="border border-dashed border-[var(--border-strong)] bg-[var(--surface-sunken)] p-6 rounded-xl flex flex-col items-center justify-center gap-2 aspect-[4/3] max-w-[280px] mx-auto shadow-sm">
+                        <div className="border border-dashed border-[var(--border-strong)] bg-[var(--surface-sunken)] p-6 rounded-xl flex flex-col items-center justify-center gap-2 aspect-[4/3] max-w-full mx-auto shadow-sm">
                           <UploadCloud size={28} className="text-secondary animate-bounce" strokeWidth={1.5} />
                           <span className="text-xs font-semibold">Drop Files Here</span>
                           <span className="text-[10px] timecode">Local browser upload</span>
                         </div>
                       )}
                       {i === 1 && (
-                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col gap-4 aspect-[4/3] max-w-[280px] mx-auto justify-center shadow-sm">
+                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col gap-4 aspect-[4/3] max-w-full mx-auto justify-center shadow-sm">
                           <div className="flex flex-col gap-1">
                             <div className="flex justify-between text-[10px] timecode"><span>Scale Factor</span><span>100%</span></div>
                             <div className="h-1.5 w-full bg-[var(--border)] rounded-full overflow-hidden"><div className="h-full w-full bg-[var(--accent)]"></div></div>
@@ -232,7 +233,7 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
                         </div>
                       )}
                       {i === 2 && (
-                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col items-center justify-center gap-3 aspect-[4/3] max-w-[280px] mx-auto shadow-sm">
+                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col items-center justify-center gap-3 aspect-[4/3] max-w-full mx-auto shadow-sm">
                           <div className="relative w-12 h-12 flex items-center justify-center">
                             <div className="absolute inset-0 rounded-full border-2 border-[var(--border-strong)]"></div>
                             <div className="absolute inset-0 rounded-full border-2 border-t-[var(--accent-secondary)] animate-spin"></div>
@@ -242,7 +243,7 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
                         </div>
                       )}
                       {i === 3 && (
-                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col justify-center gap-3 aspect-[4/3] max-w-[280px] mx-auto text-center shadow-sm">
+                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-5 rounded-xl flex flex-col justify-center gap-3 aspect-[4/3] max-w-full mx-auto text-center shadow-sm">
                           <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto">
                             <CheckCircle2 size={18} className="text-emerald-500" />
                           </div>
@@ -253,7 +254,7 @@ export function HowItWorksSection({ tool, input, output, steps }: HowItWorksSect
                         </div>
                       )}
                       {i > 3 && (
-                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-6 rounded-xl flex items-center justify-center aspect-[4/3] max-w-[280px] mx-auto shadow-sm">
+                        <div className="border border-[var(--border)] bg-[var(--surface-sunken)] p-6 rounded-xl flex items-center justify-center aspect-[4/3] max-w-full mx-auto shadow-sm">
                           <Sliders size={28} className="text-[var(--accent-secondary)] animate-pulse" />
                         </div>
                       )}
